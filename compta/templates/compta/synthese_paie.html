@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3 ">
+      <h2>Synthese paie</h2>
+      <div class="row justify-content-start">
+        <div class="col-8 offset-2">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr class="text-center">
+                <th>Date</th>
+                <th>Paie</th>
+                <th>CA</th>
+                <th>Rmb</th>
+                <th>Reste</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+              <tr>
+                <td class="text-center">{{ row.year }}-{{ row.month|twodigits }}</td>
+                <td>
+                  {% if row.paie > 0 %}
+                    <span style="float: right; color: green; font-weight: bold">{{ row.paie|floatformat:2 }}</span>
+                  {% else %}
+                    <span style="float: right; color: red">{{ row.paie|floatformat:2 }}</span>
+                  {% endif %}
+                </td>
+                <td><span style="float: right">{{ row.ca|floatformat:2 }}</span></td>
+                <td><span style="float: right">{{ row.rmb|floatformat:2 }}</span></td>
+                <td>
+                  {% if row.reste > 0 %}
+                    <span style="float: right; color: green; font-weight: bold">{{ row.reste|floatformat:2 }}</span></td>
+                  {% else %}
+                    <span style="float: right; color: red">{{ row.reste|floatformat:2 }}</span>
+                  {% endif %}
+              </tr>
+              {% endfor %}
+              <tr class="text-center">
+                <td><span style="font-weight: bold">Total</<span></td>
+                <td>NC</td>
+                <td>
+                  {% if total_ca > 0 %}
+                    <span style="float: right; color: green; font-weight: bold">{{ total_ca|floatformat:2 }}</<span>
+                  {% else %}
+                    <span style="float: right; color: red">{{ total_ca|floatformat:2 }}</<span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if total_rmb > 0 %}
+                    <span style="float: right; color: green; font-weight: bold">{{ total_rmb|floatformat:2 }}</<span>
+                  {% else %}
+                    <span style="float: right; color: red">{{ total_rmb|floatformat:2 }}</<span>
+                  {% endif %}
+                </td>
+                <td>NC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

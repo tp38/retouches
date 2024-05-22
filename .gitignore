@@ -1,0 +1,5 @@
+tmp
+.svn
+*.pyc
+admin_tools/credential.py
+admin_tools/retouches.csv

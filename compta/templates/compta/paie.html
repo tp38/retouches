@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3">
+      <h2>Paie {{ year }}-{{ month|twodigits }}</h2>
+      <form class="row g-3" method="get" action=".">
+        {% csrf_token %}
+        <div class="col-2">
+          <input type="date" name="date" value="{{ year }}-{{ month|twodigits }}-{{ day|twodigits }}">
+        </div>
+        <div class="col-1">
+          <input type="submit" value="Changer">
+        </div>
+      </form>
+      <div class="row mt-5">
+        <div class="col-4 offset-4">
+          <table class="table table-bordered table-hover caption-top">
+            <thead>
+              <tr class="text-center">
+                <th>#</th>
+                <th>Montant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Recette</td>
+                <td><span style="float: right; color: cyan; font-weight: bold">{{ recette|floatformat:2 }}</span></td>
+              </tr>
+              <tr>
+                <td>Dépense</td>
+                <td><span style="float: right; color: magenta;">{{ depense|floatformat:2}}</span></td>
+              </tr>
+              <tr>
+                <td>Paie</td>
+                <td><span style="float: right">{{ paie|floatformat:2}}</span></td>
+              </tr>
+              <tr>
+                <td>provision Urssaf m+1</td>
+                <td><span style="float: right">{{ urssaf|floatformat:2 }}</span></td>
+              </tr>
+              <tr>
+                <td>provision Charges m+1</td>
+                <td><span style="float: right">{{ charges|floatformat:2 }}</span></td>
+              </tr>
+              <tr>
+                <td>provision CA</td>
+                <td><span style="float: right">{{ ca|floatformat:2 }}</span></td>
+              </tr>
+              <tr>
+                <td>provision Rmb</td>
+                <td><span style="float: right">{{ rmb|floatformat:2 }}</span></td>
+              </tr>
+              <tr>
+                <td>Reste</td>
+                {% if reste < 0.00 %}
+                <td><span style="float: right; color: red">{{ reste|floatformat:2 }}</span></td>
+                {% else %}
+                <td><span style="float: right; font-weight: bold; color: green">{{ reste|floatformat:2 }}</span></td>
+                {% endif %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

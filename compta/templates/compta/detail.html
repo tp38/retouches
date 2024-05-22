@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3">
+      <h2>Détail : {{ row.comment }}</h2>
+      <div class="row justify-content-center mt-5">
+        <div class="col-6">
+          <form method="post" action="/compta/doc/{{ id }}/">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="dateInput" class="form-label">Date</label>
+              <input type="date" class="form-control" id="dateInput"  name="date" value="{{ row.full_date.year }}-{{ row.full_date.month|twodigits }}-{{ row.full_date.day|twodigits }}">
+            </div>
+            <div class="mb-3">
+              <label for="commentInput" class="form-label">Commentaire</label>
+              <textarea type="text" class="form-control" id="commentInput"  name="comment" rows="5">{{ row.comment }}</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="typeSelect" class="form-label">Type</label>
+              <select class="form-select" id="typeSelect" aria-label="Type" name="type">
+                {% if row.type == "chq" %}<option value="chq" selected>Chq</option>{% else %}<option value="chq">Chq</option>{% endif %}
+                {% if row.type == "cb_sumup" %}<option value="cb_sumup" selected>CB_SUMUP</option>{% else %}<option value="cb_sumup">CB_SUMUP</option>{% endif %}
+                {% if row.type == "cb_ca22" %}<option value="cb_ca22" selected>CB_CA22</option>{% else %}<option value="cb_ca22">CB_CA22</option>{% endif %}
+                {% if row.type == "cb_bsa" %}<option value="cb_bsa" selected>CB_BSA</option>{% else %}<option value="cb_bsa">CB_BSA</option>{% endif %}
+                {% if row.type == "esp" %}<option value="esp" selected>Esp</option>{% else %}<option value="esp">Esp</option>{% endif %}
+                {% if row.type == "vrt" %}<option value="vrt" selected>Vrt</option>{% else %}<option value="vrt">Vrt</option>{% endif %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="montantInput" class="form-label">Montant</label>
+              <input type="text" class="form-control" id="montantInput"  name="montant" value="{{ row.montant }}">
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-primary" type="submit">Valider</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

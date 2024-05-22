@@ -1,0 +1,23 @@
+name: "retouches"
+
+services:
+  db:
+    image: couchdb:3.3.3
+    container_name: ret_db
+    volumes:
+      - ../retouches.data:/opt/couchdb/data
+    environment:
+      - COUCHDB_USER=couchdb
+      - COUCHDB_PASSWORD=couchdb
+    ports:
+      - "5984:5984"
+  web:
+    build: .
+    container_name: ret_web
+    entrypoint: /code/entrypoint.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

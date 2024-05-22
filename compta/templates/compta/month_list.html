@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3 ">
+      <h2>Operations</h2>
+      <form class="row g-3" method="post" action=".">
+        {% csrf_token %}
+        <div class="col-2">
+          <input type="date" name="date" value="{{ day }}">
+        </div>
+        <div class="col-1">
+          <input type="submit" value="Changer">
+        </div>
+      </form>
+      <form class="row g-3" method="get" action="/compta/doc/-1/">
+        {% csrf_token %}
+        <div class="col-1 offset-11">
+          <input type="submit" value="Ajouter">
+        </div>
+      </form>
+      <div class="row justify-content-start">
+        <div class="col">
+          <table class="table table-bordered table-hover caption-top">
+            <caption>Liste des opérations du mois</caption>
+            <thead>
+              <tr class="text-center">
+                <th>Date</th>
+                <th>Commentaire</th>
+                <th>Type</th>
+                <th>Montant</th>
+                <th>Bank</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+              <tr>
+                <td class="text-center">{{ row.full_date.year }}-{{ row.full_date.month|twodigits }}-{{ row.full_date.day|twodigits }} s{{ row.full_date.week|twodigits }}</td>
+                <td><a id="comment" href="/compta/doc/{{ row.id }}/">{{ row.comment }}</a></td>
+                <td class="text-center">{{ row.type }}</td>
+                <td class="text-center">{{ row.montant }}</td>
+                <td class="text-center">{{ row.m_bank|floatformat:2 }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
