@@ -19,6 +19,10 @@ With this configuration :
 ## Admin_tools
 
 In this directory, there's some python scripts to import or export data.
+We must create a file named credential.py and put in it a valid login/password :
+1. cp credential.py.example credential.py
+2. vim (or your prefered editor) credential.py 
+
 
 ### importFromCsv.py 
 
