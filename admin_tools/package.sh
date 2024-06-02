@@ -5,5 +5,7 @@ tar --exclude='__pycache__'\
     --exclude='migrations'\
     -cvzf ../retouches.tar.gz\
     ./admin_tools\
-    ./compta
+    ./compta\
+    ./retouches/yoda.py\
+    ./retouches/settings.py
 # voir si autres fichiers sont concernés, ie : retouches/settings.py ou retouches/urls.py
