@@ -1,2 +1,1 @@
-Django
-couchdb
+requirements.6po

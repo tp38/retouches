@@ -3,9 +3,9 @@
 
 {% block content %}
     <div class="container mt-3">
-      <h2>Recettes/Dépenses par semaine</h2>
-      <div class="row justify-content-center mt-5">
-        <div class="col-6">
+      <div class="row mt-5">
+        <div class="col col-sm-6 offset-sm-3">
+          <h2>par semaine</h2>
           <table class="table table-bordered table-hover">
             <thead>
               <tr class="text-center">
@@ -17,9 +17,9 @@
             <tbody>
               {% for row in rows %}
               <tr>
-                <td class="text-center">{{ row.key.0 }}-{{ row.key.1|twodigits }} s{{ row.key.2|twodigits }}</td>
-                <td class="text-center">{{ row.value.0|floatformat:2 }}</td>
-                <td class="text-center">{{ row.value.1|floatformat:2 }}</td>
+                <td class="text-center fst-italic">s{{ row.key.2|twodigits }}</td>
+                <td class="text-end text-success">{{ row.value.0|floatformat:2 }}</td>
+                <td class="text-end text-warning">{{ row.value.1|floatformat:2 }}</td>
               </tr>
               {% endfor %}
             </tbody>

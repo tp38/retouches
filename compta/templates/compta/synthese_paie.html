@@ -3,63 +3,59 @@
 
 {% block content %}
     <div class="container mt-3 ">
-      <h2>Synthese paie</h2>
-      <div class="row justify-content-start">
-        <div class="col-8 offset-2">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr class="text-center">
-                <th>Date</th>
-                <th>Paie</th>
-                <th>CA</th>
-                <th>Rmb</th>
-                <th>Reste</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for row in rows %}
-              <tr>
-                <td class="text-center">{{ row.year }}-{{ row.month|twodigits }}</td>
-                <td>
-                  {% if row.paie > 0 %}
-                    <span style="float: right; color: green; font-weight: bold">{{ row.paie|floatformat:2 }}</span>
-                  {% else %}
-                    <span style="float: right; color: red">{{ row.paie|floatformat:2 }}</span>
-                  {% endif %}
-                </td>
-                <td><span style="float: right">{{ row.ca|floatformat:2 }}</span></td>
-                <td><span style="float: right">{{ row.rmb|floatformat:2 }}</span></td>
-                <td>
-                  {% if row.reste > 0 %}
-                    <span style="float: right; color: green; font-weight: bold">{{ row.reste|floatformat:2 }}</span></td>
-                  {% else %}
-                    <span style="float: right; color: red">{{ row.reste|floatformat:2 }}</span>
-                  {% endif %}
-              </tr>
-              {% endfor %}
-              <tr class="text-center">
-                <td><span style="font-weight: bold">Total</<span></td>
-                <td>NC</td>
-                <td>
-                  {% if total_ca > 0 %}
-                    <span style="float: right; color: green; font-weight: bold">{{ total_ca|floatformat:2 }}</<span>
-                  {% else %}
-                    <span style="float: right; color: red">{{ total_ca|floatformat:2 }}</<span>
-                  {% endif %}
-                </td>
-                <td>
-                  {% if total_rmb > 0 %}
-                    <span style="float: right; color: green; font-weight: bold">{{ total_rmb|floatformat:2 }}</<span>
-                  {% else %}
-                    <span style="float: right; color: red">{{ total_rmb|floatformat:2 }}</<span>
-                  {% endif %}
-                </td>
-                <td>NC</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col-12 col-sm-6 offset-sm-3 p-3">
+        <h2>Synthese paie</h2>
+        <div class="row">
+          <div class="col text-secondary">total CA :</div>
+          {% if total_ca > 0 %}
+          <div class="col text-success fw-bold">{{ total_ca|floatformat:2 }}</div>
+          {% else %}
+          <div class="col text-danger fw-bold">{{ total_ca|floatformat:2 }}</div>
+            {% endif %}    
         </div>
-      </div>
+        <div class="row">
+          <div class="col text-secondary">total Rmb :</div>
+          {% if total_ca > 0 %}
+          <div class="col text-success fw-bold">{{ total_rmb|floatformat:2 }}</div>
+          {% else %}
+          <div class="col text-danger fw-bold">{{ total_rmb|floatformat:2 }}</div>
+            {% endif %}    
+        </div>
+        <div class="row text-secondary fst-italic">
+          <div class="col">_P : paie</div>
+          <div class="col">_S : solde</div>
+          <div class="col">_C : CA</div>
+          <div class="col">_R : Rmb</div>
+        </div>
+        <div class="row">
+          <ul class="list-group list-group-flush">
+            {% for row in rows %}
+            <li class="list-group-item">
+              <div class="container">
+                <div class="row">
+                  <div class="col text-start text-warning fst-italic">{{ row.year }}-{{ row.month|twodigits }} :</div>
+                </div>
+                <div class="row">
+                  {% if row.paie > 0 %}
+                  <div class="col text-end text-success">{{ row.paie|floatformat:2 }}_P</div>
+                  {% else %}
+                  <div class="col text-end text-danger">{{ row.paie|floatformat:2 }}_P</div>
+                  {% endif %}
+                  {% if row.reste > 0 %}
+                  <div class="col text-end text-success">{{ row.reste|floatformat:2 }}_S</div>
+                  {% else %}
+                  <div class="col text-end text-danger">{{ row.reste|floatformat:2 }}_S</div>
+                  {% endif %}
+                </div>
+                <div class="row">
+                  <div class="col text-end">{{ row.ca|floatformat:2 }}_C</div>
+                  <div class="col text-end">{{ row.rmb|floatformat:2 }}_R</div>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
     </div>
 
 {% endblock %}

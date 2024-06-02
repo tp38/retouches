@@ -2,20 +2,20 @@
 {% load compta_extras %}
 
 {% block content %}
-    <div class="container mt-3">
-      <h2>Paie {{ year }}-{{ month|twodigits }}</h2>
-      <form class="row g-3" method="get" action=".">
-        {% csrf_token %}
-        <div class="col-2">
-          <input type="date" name="date" value="{{ year }}-{{ month|twodigits }}-{{ day|twodigits }}">
-        </div>
-        <div class="col-1">
-          <input type="submit" value="Changer">
-        </div>
-      </form>
+    <div class="container mt-2">
       <div class="row mt-5">
-        <div class="col-4 offset-4">
-          <table class="table table-bordered table-hover caption-top">
+        <div class="col col-sm-4 offset-sm-4">
+          <h2>Paie {{ year }}-{{ month|twodigits }}</h2>
+          <form class="row g-3 p-2" method="get" action=".">
+            {% csrf_token %}
+            <div class="col-8 col-sm-5 p-1">
+              <input type="date" name="date" value="{{ year }}-{{ month|twodigits }}-{{ day|twodigits }}">
+            </div>
+            <div class="col-4 col-sm-2 p-1">
+              <input type="submit" value="Changer">
+            </div>
+          </form>
+            <table class="table table-bordered table-hover caption-top">
             <thead>
               <tr class="text-center">
                 <th>#</th>
@@ -36,11 +36,11 @@
                 <td><span style="float: right">{{ paie|floatformat:2}}</span></td>
               </tr>
               <tr>
-                <td>provision Urssaf m+1</td>
+                <td>provision Urssaf</td>
                 <td><span style="float: right">{{ urssaf|floatformat:2 }}</span></td>
               </tr>
               <tr>
-                <td>provision Charges m+1</td>
+                <td>provision Charges</td>
                 <td><span style="float: right">{{ charges|floatformat:2 }}</span></td>
               </tr>
               <tr>

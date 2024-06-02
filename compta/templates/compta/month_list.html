@@ -2,49 +2,48 @@
 {% load compta_extras %}
 
 {% block content %}
-    <div class="container mt-3 ">
-      <h2>Operations</h2>
-      <form class="row g-3" method="post" action=".">
-        {% csrf_token %}
-        <div class="col-2">
-          <input type="date" name="date" value="{{ day }}">
-        </div>
-        <div class="col-1">
-          <input type="submit" value="Changer">
-        </div>
-      </form>
-      <form class="row g-3" method="get" action="/compta/doc/-1/">
-        {% csrf_token %}
-        <div class="col-1 offset-11">
-          <input type="submit" value="Ajouter">
-        </div>
-      </form>
-      <div class="row justify-content-start">
-        <div class="col">
-          <table class="table table-bordered table-hover caption-top">
-            <caption>Liste des opérations du mois</caption>
-            <thead>
-              <tr class="text-center">
-                <th>Date</th>
-                <th>Commentaire</th>
-                <th>Type</th>
-                <th>Montant</th>
-                <th>Bank</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for row in rows %}
-              <tr>
-                <td class="text-center">{{ row.full_date.year }}-{{ row.full_date.month|twodigits }}-{{ row.full_date.day|twodigits }} s{{ row.full_date.week|twodigits }}</td>
-                <td><a id="comment" href="/compta/doc/{{ row.id }}/">{{ row.comment }}</a></td>
-                <td class="text-center">{{ row.type }}</td>
-                <td class="text-center">{{ row.montant }}</td>
-                <td class="text-center">{{ row.m_bank|floatformat:2 }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+    <div class="container mt-2 ">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 p-3 list-group list-group-flush">
+          <h2>Operations</h2>
+          <form class="row g-3" method="post" action=".">
+            {% csrf_token %}
+            <div class="col-8 col-sm-3 p-1">
+              <input type="date" name="date" value="{{ day }}">
+            </div>
+            <div class="col-4 col-sm-2 p-1">
+              <input type="submit" value="Changer">
+            </div>
+          </form>
+          <form class="row g-3" method="get" action="/compta/doc/-1/">
+            {% csrf_token %}
+            <div class="col-4 col-sm-2 offset-8 offset-sm-10 p-1">
+              <input type="submit" value="Ajouter">
+            </div>
+          </form>
+          {% for row in rows %}
+            <a href="/compta/doc/{{ row.id }}/" class="list-group-item list-group-item-action">
+              <div class="container">
+                <div class="row">
+                  <div class="col-4 col-sm-1 fst-italic">s{{ row.full_date.week|twodigits }} :</div>
+                  <div class="col-6 col-sm-3 text-danger-emphasis">{{ row.full_date.year }}-{{ row.full_date.month|twodigits }}-{{ row.full_date.day|twodigits }}</div>
+                </div>
+                <div class="row">
+                  <div class="col text-info fw-bold">{{ row.comment }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-6 col-sm-10">{{ row.type }}</div>
+                  <div class="col-3 col-sm-1 fst-italic">{{ row.m_bank|floatformat:2 }}</div>
+                  {% if row.montant > 0 %}
+                  <div class="col-3 col-sm-1 text-success fw-bold">{{ row.montant }}</div>
+                  {% else %}
+                  <div class="col-3 col-sm-1 text-warning fw-bold">{{ row.montant }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+          </div>
       </div>
     </div>
 

@@ -1,0 +1,4 @@
+asgiref==3.8.1
+CouchDB==1.2
+Django==4.2.12
+sqlparse==0.5.0

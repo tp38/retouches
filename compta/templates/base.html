@@ -12,39 +12,47 @@
   </head>
   <body>
     <header>
-      <div class="container">
-        <h1>les retouches de Nat</h1>
-        <div class="row my-3 text-center">
-          <div class="col-2">
-            <a href="/compta/month_list/" class="btn btn-primary" role="button">Opérations du mois</a>
-          </div>
-          <div class="col-2">
-            <a href="/compta/paie/" class="btn btn-primary" role="button">Paie du mois</a>
-          </div>
-          <div class="col-2">
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Synthèses
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/compta/recettes_mois/">Mois</a></li>
-                <li><a class="dropdown-item" href="/compta/recettes_semaine/">Semaine</a></li>
-                <li><a class="dropdown-item" href="/compta/recettes_jour/">Jour</a></li>
-                <li><a class="dropdown-item" href="/compta/synthese_paie/">Paies</a></li>
-              </ul>
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Retouches</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="/compta/month_list/">Opérations</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/compta/paie/">Paie</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Synthèses
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/compta/recettes_mois/">Mois</a></li>
+                    <li><a class="dropdown-item" href="/compta/recettes_semaine/">Semaine</a></li>
+                    <li><a class="dropdown-item" href="/compta/recettes_jour/">Jour</a></li>
+                    <li><a class="dropdown-item" href="/compta/synthese_paie/">Paies</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="/compta/process/" aria-disabled="true">Process</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/compta/logout/">Logout</a>
+                </li>         
+               </ul>
             </div>
           </div>
-          <div class="col-2">
-            <a href="/compta/process/" class="btn btn-primary disabled" tabindex="-1" role="button" aria-disabled="true">Process</a>
-            {% comment %}
-            <a href="/compta/process/" class="btn btn-primary" role="button">Process</a>
-            {% endcomment %}
-          </div>
-          <div class="col-2 offset-2">
-            <a href="/compta/logout/" class="btn btn-primary" role="button">Logout</a>
-          </div>
         </div>
-      </div>
+      </nav>
     </header>
 
     {% block content %}{% endblock %}
