@@ -6,6 +6,7 @@ from datetime import date, datetime
 
 CHARGES = 180
 ASSURANCE = 25
+COTISATION_CA22 = 6.9
 CA = 200
 RMB = 120
 
@@ -20,6 +21,8 @@ class Bilan():
         self.paie = self.get_paie()
         self.charges_m = self.get_charges()
         self.recette, self.depense = self.get_recette_depense()
+        self.frais_sumup = self.get_frais_sumup()
+        self.frais_ca22 = self.get_frais_ca22()
         self.urssaf_prev = self.get_urssaf_prev()
         self.charges_prev = self.get_charges_prev()
         self.provision_ca = self.get_provision_ca()
@@ -35,6 +38,22 @@ class Bilan():
                 depense = r.value[1] * -1
                 break
         return  recette, (depense - self.paie - self.charges_m)
+
+    def get_frais_ca22(self):
+        frais = 0
+        for v in self.db.view( 'compta/frais-ca22', group=True, group_level=2 ):
+            if v.key == [self.year, self.month ] :
+                frais = v.value * -1
+                break
+        return frais
+
+    def get_frais_sumup(self):
+        frais = 0
+        for v in self.db.view( 'compta/frais-sumup', group=True, group_level=2 ):
+            if v.key == [self.year, self.month ] :
+                frais = v.value * -1
+                break
+        return frais
 
     def get_charges(self):
         old_ch = 0
@@ -64,9 +83,10 @@ class Bilan():
     def get_charges_prev(self):
     	if self.year == 2024 and self.month < 4:
     		return CHARGES
-    	else:
-#    		return CHARGES
+    	elif self.year == 2024 and self.month >= 4 and self.month < 6 :
         	return CHARGES + ASSURANCE
+    	else:
+        	return CHARGES + ASSURANCE + COTISATION_CA22
 
     def get_dispo_brut(self):
         return self.recette - self.depense - self.paie - self.urssaf_prev - self.charges_prev
@@ -88,8 +108,7 @@ class Bilan():
         return rmb
 
     def get_dispo_net(self):
-        return self.get_dispo_brut() + self.get_provision_ca() + self.get_provision_rmb()
-        # return self.get_dispo_brut()
+        return self.get_dispo_brut() + self.get_provision_ca() + self.get_provision_rmb() + self.get_frais_ca22() + self.get_frais_sumup()
 
 
     def get_bilan(self):
@@ -98,6 +117,8 @@ class Bilan():
                 'day': self.day,
                 'recette': self.recette,
                 'depense': self.depense,
+                'sumup': -1 * self.frais_sumup,
+                'ca22': -1 * self.frais_ca22,
                 'paie': self.paie,
                 'urssaf': self.urssaf_prev,
                 'charges': self.charges_prev,
@@ -122,7 +143,6 @@ def paie(request):
         b = Bilan( db, sd.year, sd.month, sd.day )
         return render( request,'compta/paie.html', b.get_bilan() )
     else:
-
         return render( request,'compta/index.html' )
 
 
