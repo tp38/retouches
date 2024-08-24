@@ -5,8 +5,8 @@ from datetime import date, datetime
 
 
 CHARGES = 180
-ASSURANCE = 25
-COTISATION_CA22 = 6.9
+ASSURANCE = 24.33
+COTISATION_CA22 = 6
 CA = 200
 RMB = 120
 
@@ -88,9 +88,6 @@ class Bilan():
     	else:
         	return CHARGES + ASSURANCE + COTISATION_CA22
 
-    def get_dispo_brut(self):
-        return self.recette - self.depense - self.paie - self.urssaf_prev - self.charges_prev
-
     def get_provision_ca(self):
         ca = 0
         for s in self.db.view( 'compta/paiement_ca', group=True, group_level=2 ):
@@ -107,9 +104,11 @@ class Bilan():
                 break
         return rmb
 
+    def get_dispo_brut(self):
+        return self.recette - self.depense - self.paie - self.urssaf_prev - self.charges_prev
+
     def get_dispo_net(self):
         return self.get_dispo_brut() + self.get_provision_ca() + self.get_provision_rmb() + self.get_frais_ca22() + self.get_frais_sumup()
-
 
     def get_bilan(self):
         return {'year': self.year,
