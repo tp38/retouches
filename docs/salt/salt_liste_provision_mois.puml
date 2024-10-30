@@ -1,0 +1,22 @@
+@startsalt liste_provision_du_mois
+
+{
+**Liste provision du mois 10/2024**
+.
+  {
+    ^21/10/2024^ | [Envoyer]
+  }
+.
+  {#
+    **Date**  |  **Bénéficaire**  | **Montant**
+    31/10/2024 | Urssaf | 492.27
+    18/10/2024 | Rmb | 120.00
+    10/10/2024 | CA | 200.00
+    05/10/2024 | CA22 | 6.00
+    03/10/2024 | La PosteMobile | 4.99
+    03/10/2024 | Axa | 26.10
+    02/10/2024 | Le Boudec | 180.00
+  }
+
+}
+@endsalt

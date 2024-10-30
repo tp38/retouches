@@ -1,0 +1,18 @@
+@startsalt liste_dépenses_du_mois
+
+{
+**Liste dépenses du mois 10/2024**
+.
+  {
+    ^21/10/2024^ | [Envoyer]
+  }
+.
+  {#
+    **Date rglt**  |  **Bénéficaire**  | **Montant**
+    05/10/2024 | CA22 | 6.00
+    03/10/2024 | La PosteMobile | 4.99
+    03/10/2024 | Axa | 26.10
+    02/10/2024 | Le Boudec | 180.00
+  }
+}
+@endsalt

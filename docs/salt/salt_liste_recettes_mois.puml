@@ -1,0 +1,27 @@
+@startsalt liste_recettes_du_mois
+
+{
+**Liste recettes du mois 10/2024**
+  .
+  {#
+  .|Jour | semaine | mois
+  cible | **133.00** | **495.00** | **2333.00** 
+  actuel |**<color green>142.12</color>** | **<color green>512.00</color>** | **<color red>1827.10</color>**
+  }
+  .
+  .
+  {
+  ^20/10/2024^ | ^En cours^ | [Envoyer]
+  }
+  .
+  {#
+    **n°**  |  **Nom**  | **Date rglt** | **Montant**
+  2-049 | .|. | 18
+  2-048  | . | 12/10/2024  | 42
+  2-047  | Annequin | 10/10/2024 | 27
+  2-046  | Léger   | 09/10/2024 | 12
+  2-045  | Aumond | 08/10/2024 | 37
+  }
+
+}
+@endsalt

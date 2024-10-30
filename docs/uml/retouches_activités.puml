@@ -1,0 +1,19 @@
+@startuml retouches_activités
+
+start
+
+:Prise en charge;
+
+repeat
+    :Planification;
+
+    :Couture;
+
+    :présentation travail réalisé;
+repeat while (client non satisfait ?)
+
+:Restitution;
+
+end
+
+@enduml

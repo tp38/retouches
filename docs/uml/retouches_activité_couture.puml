@@ -1,0 +1,18 @@
+@startuml retouches_activité_couture
+
+start
+
+if (besoin fourniture ?) then (oui) 
+    : achat fournitures;
+else (non)
+endif
+:réalisation du travail;
+:envoi du SMS;
+:mise en boutique du travail réalisé;
+:noter la date de fin 
+sur la **<color blue>partie atelier</color>**
+de la fiche suiveuse;
+
+end
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml retouches_usecases
+
+left to right direction
+
+package LesRetouchesDeNat {
+    usecase dépôt as d
+    usecase retrait as r 
+    usecase travail as t
+    usecase planification as p
+    usecase reporting as c
+    usecase achat as a
+}
+
+Client --> (d)
+
+(d) <-- Vendeuse
+(p) <-- Couturière
+(t) <-- Couturière
+(a) <-- Couturière
+(a) <-- Vendeuse
+(r) <-- Vendeuse
+
+Client --> (r)
+
+Vendeuse <|-- Gestion
+
+Gestion --> (c)
+
+(t) .> (p)
+
+@enduml

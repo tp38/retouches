@@ -1,0 +1,35 @@
+@startuml retouches_sequence_prise_en_charge
+
+actor client as cl
+actor vendeuse as v
+actor couturière as co
+actor gestion as g
+
+cl -> v : expression besoin
+
+v -> cl : estimation Délai
+alt Délai OK
+    v -> cl : estimation TCD
+    alt TCD OK 
+        alt paiement ?
+            cl -> v : à la commande
+            cl -> v : paiement
+            v -> cl : souche mention **"payée"**
+        else 
+            cl -> v : à la réception
+            v -> cl : souche mention **"non payé"**
+        end
+
+        v -> cl : remise **<color purple>"souche client"</color>**
+        note left : état déposé
+
+        v -> co : à planifier **<color blue>"souche atelier"</color>**
+        note right : état planifié
+
+        v -> g : remise **<color green>"souche gestion"</color>**
+
+        g -> g : création dossier travail
+    end
+end
+
+@enduml

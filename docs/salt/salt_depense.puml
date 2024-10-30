@@ -1,0 +1,28 @@
+@startsalt detail_depense
+
+{
+**Détail achat** | .
+. |
+    {
+        **Description** :
+            {SI
+                Paiement Urssaf mois de Septembre
+                .
+                .
+                "                               " 
+            }
+        .
+        **Bénéficiaire** :
+        Nom :   | "Urssaf"
+        .
+        **Réglement** :
+        Montant :    | "35" €
+        Mode :    | ^CB Sumup^
+        Date :    | "27/10/2024"
+        Pointé : | (X)
+        .
+        "" | [ Valider] | [ Annuler ]
+    }
+}
+
+@endsalt

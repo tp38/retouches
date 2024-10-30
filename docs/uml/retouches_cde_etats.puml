@@ -1,0 +1,46 @@
+@startuml retouches_cde_etats
+hide empty description
+
+state Recette <<choice>>
+
+
+[*] --> Déposé
+
+Déposé --> Planifié
+note on link
+Le client a accepté l'évaluation 
+du travail, coût et délai.
+Le travail est confié à l'atelier
+et est inséré dans le planning
+end note
+
+Planifié -> En_cours
+note on link
+Le travail est pris en charge
+par une couturière
+end note
+
+En_cours --> Prêt
+note on link
+Le travail est terminé et est
+remis en boutique. 
+Le client est prévenu
+end note
+
+Prêt --> Recette
+Recette --> Planifié
+note on link
+Le client n'accepte pas 
+le travail réalisé. Le travail
+retourne en atelier
+end note
+Recette --> Terminé
+note on link
+Le client accepte le
+travail réalisé et reprend
+son bien
+end note
+
+Terminé --> [*]
+
+@enduml

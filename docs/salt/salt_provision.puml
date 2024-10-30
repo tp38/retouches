@@ -1,0 +1,25 @@
+@startsalt detail_provision
+
+{
+**Détail Provision** | .
+. |
+    {
+        **Description** :
+            {SI
+                Paiement Urssaf mois d'Aout
+                .
+                .
+                "                               " 
+            }
+        .
+        **Bénéficiaire** :
+        Nom :   | "Urssaf"
+        .
+        **Réglement** :
+        Montant :    | "492.23" €
+        .
+        "" | [ Valider] | [ Annuler ]
+    }
+}
+
+@endsalt

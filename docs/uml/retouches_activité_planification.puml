@@ -1,0 +1,20 @@
+@startuml activité_planification
+
+start
+
+:estimation durée du travail;
+:prise en compte planning 
+de charge courant sur l'agenda;
+if (insertion possible ?) then (oui)
+    :insertion du travail dans le planning;
+    :dépot sur la bonne étagère;
+else (non)
+    :replanification autre travail 
+    pour respect délai;
+    :réagencement des étagères 
+    en fonction nouveau planning;
+endif
+
+end
+
+@enduml

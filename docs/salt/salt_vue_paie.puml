@@ -1,0 +1,40 @@
+@startsalt vue_paie
+
+{
+**Paie du mois**
+    .
+    {
+        ^21/10/2024^ | [Envoyer]
+    }
+    .
+    {#
+        Solde banque | **<color cyan>4765.22</color>**
+        Solde réel | **<color magenta>4169.12</color>**
+        Trésorerie | **<color green>3500.23</color>**        
+    }
+    .
+    {+
+        Recettes : | **<color blue>2142.12</color>**
+    }
+    .
+    {+
+        Dépenses : | **<color magenta>70.62</color>**
+        . | 22.22 | frais Sumup 
+        . | 0.00 | frais ca22
+        . | 48.40 | autres 
+    }
+    .
+    {+
+        Provisions : | **<color cyan>991.43</color>**
+        . | 460.53 | Urssaf 
+        . | 211.90 | Charges 
+        . | 200.00 | CA 
+        . | 120.00 | Rmb 
+    }
+    .
+    {+
+        Reste (Paie) : | . | **<color green>1078.95</color>**
+    }
+}
+
+@endsalt

@@ -1,0 +1,31 @@
+@startuml retouches_sequence_restitution
+
+actor client as cl
+actor vendeuse as v
+actor couturière as co
+actor gestion as g
+
+loop NOT OK
+    co -> cl : travail fini
+    note right : état prêt
+
+    alt Validation Travail
+        cl -> v : OK
+    else NOK
+        cl -> v : NOK
+        note left : état refusé
+        v -> co : à planifier **<color blue>"souche atelier"</color>**
+        note right : état planifié
+    end
+end
+
+alt souche mention "non payée"
+    cl -> co : paiement
+    co -> cl : encaissement réalisé
+end
+
+co -> g : remise **<color blue>"souche atelier"</color>**
+note right : état terminé
+g -> g : màj dossier travail
+
+@enduml

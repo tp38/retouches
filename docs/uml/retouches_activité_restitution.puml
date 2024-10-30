@@ -1,0 +1,21 @@
+@startuml retouches_activité_restitution
+
+start
+
+if (paiement non réalisé ?) then (oui)
+    :encaissement;
+    :donner carte de fidelité;
+else (non)
+endif
+:renseigner la date de retrait;
+if (client très satisfait ? ) then (oui)
+    :proposer de mettre 
+    un commentaire sur google;
+endif
+:restituer le travail;
+:mettre la **<color blue>partie atelier</color>**
+dans la boite d'activité du jour; 
+
+end
+
+@enduml

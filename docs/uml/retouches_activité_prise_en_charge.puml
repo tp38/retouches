@@ -1,0 +1,38 @@
+@startuml retouches_activité_prise_en_charge
+
+start
+
+partition Prise en charge {
+    :délai souhaité;
+    if (délai réalisable ?) then (oui)
+        :reformulation travail;
+        :définition du coût;
+        if (TCD accepté ?) then (oui)
+            :enregistrer la date de dépôt;
+            :prendre les coordonnées 
+            du client;
+            :proposition réglement;
+            if (réglement accepté ?) then (oui)
+                :encaissement;
+                :donner carte de fidelité;
+            else (non)
+            endif 
+            :renseigner les 3 parties de la fiche suiveuse;
+            :remise **<color purple>partie client</color>**
+            de la fiche suiveuse au client;
+        else (non)
+            end
+        endif
+    else (non)
+        end
+    endif
+    :mettre la **<color green>partie gestion</color>**
+    dans la boite d'activité du jour;
+    :transfert à l'atelier :
+    vêtement + la **<color blue>partie atelier</color>**
+    de la fiche suiveuse; 
+}
+
+end
+
+@enduml

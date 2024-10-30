@@ -1,0 +1,44 @@
+@startsalt detail_recette
+
+{
+**Détail recette** | .
+. |
+    {
+        Carnet | ^5^ | Numero | ^015^
+        .
+        **Description** :
+            {SI
+                veste : 2 BP
+                pantalon : ourlet
+                .
+                .
+                "                               " 
+            }
+        .
+        **Client** :
+        Nom :   | "Dupont"
+        Ville : | "Yffiniac"
+        Tel. :  | "0617425218"
+        .
+        **Dates** :
+        Dépôt :     | "27/10/2024"
+        Prévu :     | "05/11/2024"
+        SMS :       | "30/10/2024"
+        Retrait :   | "03/11/2024"
+        .
+        **Réglement** :
+        Acompte : | "00" €
+        Mode :    | ^_^
+        Date :    | ""
+        Pointé :  | ()
+        .
+        Solde :    | "35" €
+        Mode :    | ^CB Sumup^
+        Date :    | "27/10/2024"
+        Pointé : | (X)
+        .
+        "" | [ Valider] | [ Annuler ]
+    }
+}
+
+@endsalt
