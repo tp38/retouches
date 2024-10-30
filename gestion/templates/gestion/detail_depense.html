@@ -1,0 +1,49 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-2">
+      <h2>Dépense</h2>
+      <form method="post" class="col-sm-6 offset-sm-3 col-12 px-3" action="/gestion/depense/{{ id }}/">
+        {% csrf_token %}
+        <div class="row mt-3">
+          <label for="dateInput">Date</label>
+          <input type="date" class="form-control" id="dateInput"  name="date"
+            {% if row.date %}value="{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}"{% endif %}>
+        </div>
+        <div class="row mt-3">
+          <label for="beneficiaireInput" class="form-label">Bénéficiaire</label>
+          <input type="text" class="form-control" id="nomInput" name="beneficiaire" value="{{row.beneficiaire}}">
+        </div>
+        <div class="row mt-3">
+            <label for="descriptionInput" class="form-label">Description</label>
+            <textarea type="text" class="form-control" id="descriptionInput"  name="description" rows="3">{{ row.description }}</textarea>  
+        </div>
+        <div class="row mt-3">
+          <label for="montantInput" class="form-label">Montant</label>
+          <input type="text" class="form-control" id="montantInput"  name="montant" value="{{ row.montant }}">
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-2 col-6">
+            <label for="bankInput">pointé : </label>
+          </div>
+          <div class="col-sm-1 col-2">
+            {% if row.bank %}
+            <input type="checkbox" id="bankInput"  name="bank" checked>
+            {% else %}
+            <input type="checkbox" id="bankInput"  name="bank">
+            {% endif %}
+            </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-2 offset-sm-4 col-6">
+            <button class="btn btn-primary" type="submit">Valider</button>
+          </div>
+          <div class="col-sm-2 col-6">
+            <button type="button" class="btn btn-primary" onclick="window.history.back();">Annuler</button>
+          </div>  
+        </div>
+      </form>
+    </div>
+
+{% endblock %}

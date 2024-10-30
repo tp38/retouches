@@ -1,0 +1,41 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3">
+      <div class="row justify-content-center">
+        <div class="col-sm-6 col-12">
+          <h2>Provision</h2>
+          <div class="row mt-3 justify-content-center">
+            <div class="col-sm-8 col-12 py-3 text-danger bg-danger-subtle border">
+              Vouler-vous vraiment supprimer cette provision ?
+            </div>
+          </div>
+          <form method="post" action="/gestion/provision/{{ id }}/">
+            {% csrf_token %}
+            <div class="row mt-3">
+              <div class="col-sm-3 offset-sm-2 col-5">Date :</div>
+              <div class="col-sm-4 col-7">{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-3 offset-sm-2 col-5">Descrip. :</div>
+              <div class="col-sm-4 col-7">{{ row.description }}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-3 offset-sm-2 col-5">Montant :</div>
+              <div class="col-sm-4 col-7">{{ row.montant }}</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-sm-2 offset-sm-4 col-6">
+                <button class="btn btn-primary" type="submit">Effacer</button>
+              </div>
+              <div class="col-sm-2 col-6">
+                <button type="button" class="btn btn-primary" onclick="window.history.back();">Annuler</button>
+              </div>  
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

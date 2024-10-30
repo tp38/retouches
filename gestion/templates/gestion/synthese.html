@@ -1,0 +1,107 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3">
+      <div class="row justify-content-center">
+        <div class="col-10 col-sm-6">
+          <h2>Synthèse</h2>
+          {% csrf_token %}
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-sm-3 col-6">
+                <div class="row justify-content-center text-center">Banque</div>
+                <div class="row justify-content-center text-primary fw-bold">{{ compta.bank }}</div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="row justify-content-center">Réel</div>
+                <div class="row justify-content-center text-warning fw-bold">{{ compta.real }}</div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="row justify-content-center">Trésorerie</div>
+                <div class="row justify-content-center text-secondary fw-bold">{{ compta.incomes }}</div>
+              </div>
+              <div class="col-sm-3 col-6">
+                <div class="row justify-content-center">Provision</div>
+                <div class="row justify-content-center text-success fw-bold">{{ compta.provision }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-sm-8 offset-sm-2 col-12">
+                <a href="/gestion/recettes/" class="list-group-item list-group-item-action">
+                  <div class="row mt-1 border-bottom">
+                    <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
+                      CA :
+                    </div>
+                    <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-primary fw-bold">
+                      {{ ca|floatformat:2 }}
+                    </div>
+                  </div>
+                </a>
+                <a href="/gestion/provisions/" class="list-group-item list-group-item-action">
+                  <div class="row mt-1 border-bottom">
+                    <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
+                      Provisions :
+                    </div>
+                    <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-success-emphasis fw-bold">
+                      {{ provisions|floatformat:2 }}
+                    </div>
+                  </div>
+                </a>
+                <a href="/gestion/depenses/" class="list-group-item list-group-item-action">
+                  <div class="row mt-1 border-bottom">
+                    <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
+                      Dépenses :
+                    </div>
+                    <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-danger-emphasis fw-bold">
+                      {{ depenses|floatformat:2 }}
+                    </div>
+                  </div>
+                </a>
+                <div class="row mt-1 border-bottom">
+                  <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
+                    Frais :
+                  </div>
+                  <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-warning-emphasis fw-bold">
+                    {{ frais|floatformat:2 }}
+                  </div>
+                </div>
+                <div class="row mt-1 text-enter border-bottom">
+                  <div class="col-sm-5 offset-sm-1 col-7 my-2">
+                    Reste :
+                  </div>
+                  {% if reste < 1200 %}
+                  <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-warning fw-bold">
+                  {% else %}
+                  <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-success fw-bold">
+                  {% endif %}
+                      {{ reste|floatformat:2 }}
+                  </div>
+                </div>    
+              </div>
+            </div>  
+          </div>
+          <div class="container mt-4">
+            <form method="post" action="/gestion/synthese/">
+              <div class="row mt-3">
+                <div class="col-12 col-sm-4">
+                  <input type="date" class="form-control" id="dateInput"  name="date"
+                    value="{{ day.0 }}-{{ day.1|twodigits }}-{{ day.3|twodigits}}" >
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-4 col-sm-2">
+                  <button class="btn btn-primary" type="submit">Valider</button>
+                </div>
+                <div class="col-4 offset-2 col-sm-2 offset-sm-1">
+                  <button type="button" class="btn btn-primary" onclick="window.history.back();">Retour</button>
+                </div>  
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

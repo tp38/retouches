@@ -22,4 +22,5 @@ from django.urls import path, include
 # ]
 urlpatterns = [
 	path('compta/', include('compta.urls')),
+	path('gestion/', include('gestion.urls')),
 ]

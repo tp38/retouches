@@ -1,0 +1,47 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3">
+      <h2>Provision</h2>
+      <form class="col-sm-6 offset-sm-3 col-12 px-3" method="post" action="/compta/provision/{{ id }}/">
+        {% csrf_token %}
+        <div class="row mt-3">
+          <label for="dateInput">Date</label>
+          <input type="date" class="form-control" id="dateInput"  name="date"
+            {% if row.date %}value="{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}"{% endif %}>
+        </div>
+        <div class="row mt-3">
+          <label for="typeSelect" class="form-label">Type</label>
+          <select class="form-select" id="typeSelect" aria-label="type" name="type">
+            {% if row.type == "ca" %}<option value="ca" selected>CA</option>{% else %}<option value="ca">CA</option>{% endif %}
+            {% if row.type == "rmb" %}<option value="rmb" selected>Rmb</option>{% else %}<option value="rmb">Rmb</option>{% endif %}
+            {% if row.type == "axa" %}<option value="axa" selected>Axa</option>{% else %}<option value="axa">Axa</option>{% endif %}
+            {% if row.type == "bank" %}<option value="bank" selected>Bank</option>{% else %}<option value="bank">Bank</option>{% endif %}
+            {% if row.type == "tel" %}<option value="tel" selected>Tel</option>{% else %}<option value="tel">Tel</option>{% endif %}
+            {% if row.type == "other" %}<option value="other" selected>Autres</option>{% else %}<option value="other">Autres</option>{% endif %}
+          </select>
+        </div>
+        <div class="row mt-3">
+            <label for="descriptionInput" class="form-label">Description</label>
+            <textarea type="text" class="form-control" id="descriptionInput"  name="description" rows="3">{{ row.description }}</textarea>  
+        </div>
+        <div class="row mt-3">
+          <label for="montantInput" class="form-label">Montant</label>
+          <input type="text" class="form-control" id="montantInput"  name="montant" value="{{ row.montant }}">
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-2 offset-sm-1 col-4 p-1">
+            <button class="btn btn-primary" type="submit">Valider</button>
+          </div>
+          <div class="col-sm-2 offset-sm-1 col-4 p-1">
+            <a href="./delete" class="btn btn-primary">Effacer</a>
+          </div>  
+          <div class="col-sm-2 offset-sm-1 col-4 p-1">
+            <button type="button" class="btn btn-primary" onclick="window.history.back();">Annuler</button>
+          </div>  
+        </div>
+      </form>
+    </div>
+
+{% endblock %}

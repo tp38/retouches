@@ -1,0 +1,138 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-3">
+      <div class="row justify-content-center">
+        <form class="col-sm-8 col-12" method="post" action="/gestion/recette/{{ id }}/">
+          {% csrf_token %}
+          <input type="hidden" name="carnet" value="{{ row.carnet }}">
+          <input type="hidden" name="numero" value="{{ row.numero }}">
+          <div class="row justify-content-center">
+            {% comment %} first line : carnet - numero {% endcomment %}
+            <div class="col-sm-7 col-12">
+              <h2>Détail recette n° {{ row.carnet }}-{{ row.numero }}</h2>
+            </div>
+          </div>          
+          <div class="row mt-3">
+            {% if phase == "depot" %}
+            <div class="col-sm-4 offset-sm-4 col-12 bg-success py-2">
+              {% else %}
+            <div class="col-sm-3 col-12 bg-success py-2">
+            {% endif %}
+              <label for="montant_du">Montant dû</label>
+                <input type="text" class="form-control" id="montantDuInput"  name="montant_du" value="{{ row.cout }}">
+            </div>
+            {% if phase == "retrait" %}
+            <div class="col-sm-6 col-12 border py-2 bg-info-subtle">
+              {% comment %} description {% endcomment %}
+                <label for="descriptionInput" class="form-label">Description</label>
+                <textarea type="text" class="form-control" id="descriptionInput"  name="description" rows="3">{{ row.description }}</textarea>  
+            </div>
+            <div class="col-sm-3 col-12 border bg-light-subtle pb-2">
+              <div class="row">
+                <label for="prevuInput" class="form-label">Prévu</label>
+                <input type="date" class="form-control" id="prevuInput"  name="prevu"
+                    {% if row.dates.prevu %}value="{{ row.dates.prevu.0 }}-{{ row.dates.prevu.1|twodigits }}-{{ row.dates.prevu.3|twodigits}}"{% endif %}>
+              </div>
+              <div class="row">
+                <label for="smsInput" class="form-label">Sms</label>
+                <input type="date" class="form-control" id="smsInput"  name="sms"
+                    {% if row.dates.sms %}value="{{ row.dates.sms.0 }}-{{ row.dates.sms.1|twodigits }}-{{ row.dates.sms.3|twodigits}}"{% endif %}>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          {% comment %} reglements {% endcomment %}
+          <div class="row my-3">
+            {% if phase == "depot" %}
+            <div class="col-sm-4 offset-sm-4 col-12 border bg-info">
+              {% else %}
+            <div class="col-sm-3 col-12 border bg-info">
+            {% endif %}
+              <h5>Rglt dépot</h5>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="acpMontantInput"  name="acp_montant" value="{{ row.reglements.commande.montant }}">
+              </div>
+              <div class="mb-3">
+                <select class="form-select" id="acpModeSelect" aria-label="AcompteMode" name="acp_mode">
+                  {% if row.reglements.commande.mode == "chq" %}<option value="chq" selected>Chq</option>{% else %}<option value="chq">Chq</option>{% endif %}
+                  {% if row.reglements.commande.mode == "cb_sumup" %}<option value="cb_sumup" selected>CB_SUMUP</option>{% else %}<option value="cb_sumup">CB_SUMUP</option>{% endif %}
+                  {% if row.reglements.commande.mode == "cb_ca22" %}<option value="cb_ca22" selected>CB_CA22</option>{% else %}<option value="cb_ca22">CB_CA22</option>{% endif %}
+                  {% if row.reglements.commande.mode == "esp" %}<option value="esp" selected>Esp</option>{% else %}<option value="esp">Esp</option>{% endif %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <input type="date" class="form-control" id="acpDateInput"  name="acp_date"
+                  {% if row.reglements.commande.date.0 != 0 %}
+                    value="{{ row.reglements.commande.date.0 }}-{{ row.reglements.commande.date.1|twodigits }}-{{ row.reglements.commande.date.3|twodigits}}"
+                  {% endif %}>
+                </div>
+              <div class="mb-3">
+                <label for="acpBankInput">pointé</label>
+                {% if row.reglements.commande.bank %}
+                <input type="checkbox" id="acpBankInput"  name="acp_bank" checked>
+                {% else %}
+                <input type="checkbox" id="acpBankInput"  name="acp_bank">
+                {% endif %}
+              </div>
+            </div>
+            {% if phase == "retrait" %}
+            <div class="col-sm-3 col-12 border bg-primary">
+              <h5>Rglt retrait</h5>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="soldeMontantInput"  name="livraison_montant" value="{{ row.reglements.livraison.montant }}">
+              </div>
+              <div class="mb-3">
+                <select class="form-select" id="soldeModeSelect" aria-label="AcompteMode" name="livraison_mode">
+                  {% if row.reglements.livraison.mode == "chq" %}<option value="chq" selected>Chq</option>{% else %}<option value="chq">Chq</option>{% endif %}
+                  {% if row.reglements.livraison.mode == "cb_sumup" %}<option value="cb_sumup" selected>CB_SUMUP</option>{% else %}<option value="cb_sumup">CB_SUMUP</option>{% endif %}
+                  {% if row.reglements.livraison.mode == "cb_ca22" %}<option value="cb_ca22" selected>CB_CA22</option>{% else %}<option value="cb_ca22">CB_CA22</option>{% endif %}
+                  {% if row.reglements.livraison.mode == "esp" %}<option value="esp" selected>Esp</option>{% else %}<option value="esp">Esp</option>{% endif %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <input type="date" class="form-control" id="soldeDateInput"  name="livraison_date" 
+                  {% if row.reglements.livraison.date.0 != 0 %}
+                    value="{{ row.reglements.livraison.date.0 }}-{{ row.reglements.livraison.date.1|twodigits }}-{{ row.reglements.livraison.date.3|twodigits}}"
+                  {% endif %}>
+              </div>
+              <div class="mb-3">
+                <label for="soldeBankInput">pointé</label>
+                {% if row.reglements.livraison.bank %}
+                <input type="checkbox" id="soldeBankInput"  name="livraison_bank" checked>
+                {% else %}
+                <input type="checkbox" id="soldeBankInput"  name="livraison_bank">
+                {% endif %}
+              </div>    
+            </div>
+            {% comment %} client {% endcomment %}
+            <div class="col-sm-6 col-12 border bg-primary-subtle">
+              <div class="row px-3">
+                <label for="nomInput" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="nomInput" name="nom" value="{{row.client.nom}}">
+              </div>
+              <div class="row px-3">
+                <label for="villeInput" class="form-label">Ville</label>
+                <input type="text" class="form-control" id="villeInput" name="ville" value="{{row.client.ville}}">
+              </div>
+              <div class="row px-3 pb-3">
+                <label for="telInput" class="form-label">Tel</label>
+                <input type="text" class="form-control" id="telInput" name="tel" value="{{row.client.tel}}">
+              </div>
+            </div>
+            {% endif %}
+            <div class="row mt-3">
+              <div class="col-sm-2 col-4 offset-sm-4 offset-2 text-center">
+                <button class="btn btn-primary" type="submit">Valider</button>
+              </div>
+              <div class="col-sm-2 col-4 text-center">
+                <button type="button" class="btn btn-primary" onclick="window.history.back();">Annuler</button>
+              </div>  
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+{% endblock %}

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'compta',
+    'gestion',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +63,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'compta_extras': 'compta.templatetags.compta_extras',
+                }            
         },
     },
 ]
