@@ -1,0 +1,13 @@
+{
+    "_id": "_design/filters",
+    "_rev": "5-6b99aa733f72c075af37076058d00ed6",
+    "views": {
+        "deletefilter": {
+        "map": "function (doc) {\n  emit(doc._id, 1);\n}"
+        }
+    },
+    "filters": {
+        "deletedfilter": "function(doc, req) { return !doc._deleted; };"
+    },
+    "language": "javascript"
+}

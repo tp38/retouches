@@ -13,4 +13,5 @@ urlpatterns = [
     path( 'provisions/', views.provisions_liste, name='provision-list' ),
     path( 'provision/<str:uuid>/', views.provision_detail, name='provision-detail' ),
     path( 'provision/<str:uuid>/delete', views.provision_delete, name='provision_delete' ),
+    path( 'stats/inoutbyday', views.inOutByDay, name='in_out_by_day' ),
 ]

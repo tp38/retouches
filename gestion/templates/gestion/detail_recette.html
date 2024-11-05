@@ -6,12 +6,18 @@
       <div class="row justify-content-center">
         <form class="col-sm-8 col-12" method="post" action="/gestion/recette/{{ id }}/">
           {% csrf_token %}
-          <input type="hidden" name="carnet" value="{{ row.carnet }}">
-          <input type="hidden" name="numero" value="{{ row.numero }}">
           <div class="row justify-content-center">
             {% comment %} first line : carnet - numero {% endcomment %}
             <div class="col-sm-7 col-12">
               <h2>Détail recette n° {{ row.carnet }}-{{ row.numero }}</h2>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-2 offset-sm-4 col-4">
+              <input type="text" class="form-control" id="carnetNumber" name="carnet" value="{{ row.carnet }}" >
+            </div>
+            <div class="col-sm-2 col-7">
+              <input type="text" class="form-control" id="numeroNumber" name="numero" value="{{ row.numero }}" >
             </div>
           </div>          
           <div class="row mt-3">

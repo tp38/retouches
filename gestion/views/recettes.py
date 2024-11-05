@@ -121,8 +121,8 @@ def recette_detail(request, uuid):
     else :
         if uuid == "new" :
             uuid = uuid4()
-            carnet = 1
-            numero = 1
+            carnet = 0
+            numero = 0
             for r in db.view( 'gestion/recettesFichesByCarnetNumero',  descending=True, limit=1 ):
                 doc = db[r.id]
                 carnet = doc['carnet']
@@ -173,7 +173,6 @@ def recettes_liste(request):
     s = Server( settings.URL_SERVER % (login, pwd) )
 
     db = s[settings.DB_GESTION]
-    rows = []
 
     if request.method == "POST":
         dd = request.POST.get('dd')
@@ -191,9 +190,10 @@ def recettes_liste(request):
     else:
         view = "gestion/recettesFiches"
 
-    for r in db.view( view, startkey=[end,{}], endkey=[start,{}], descending=True ):
+    data = []
+    for r in db.view( view, startkey=[end,{}], endkey=start, descending=True ):
         doc = db[r.id]
-        rows.append( doc )
+        data.append( doc )
 
     reqday = datetimeToArray( reqday )
     day = 0
@@ -216,7 +216,7 @@ def recettes_liste(request):
 
     report = { 'day': day, 'week': week, 'month': month }
 
-    return render( request,'gestion/liste_recettes.html', {'rows': rows, 'day': dd, 'report': report } )
+    return render( request,'gestion/liste_recettes.html', {'rows': data, 'day': dd, 'report': report } )
 
 
 

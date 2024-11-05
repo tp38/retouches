@@ -1,0 +1,46 @@
+{
+    "_id": "_design/gestion",
+    "_rev": "10-22116b5f8d777524a2ad33416b3a2144",
+    "views": {
+      "recettesResultat": {
+        "reduce": "_sum",
+        "map": "function (doc) {\n  if(  doc.class == 'recette' ) {\n      emit(doc.dates.depot, doc.cout );\n  }\n}"
+      },
+      "recettesFichesEnCours": {
+        "map": "function (doc) {\n  if(  doc.class == 'recette' && ! doc.dates.retrait ) {\n      emit([doc.dates.depot,doc.carnet, doc.numero], doc);\n  }\n}"
+      },
+      "recettesFiches": {
+        "map": "function (doc) {\n  if(  doc.class == 'recette' ) {\n      emit([doc.dates.depot,doc.carnet, doc.numero], doc);\n  }\n}"
+      },
+      "recettesFichesByCarnetNumero": {
+        "map": "function (doc) {\n  if(  doc.class == 'recette' ) {\n      emit([doc.carnet, doc.numero], doc);\n  }\n}"
+      },
+      "depensesFiches": {
+        "map": "function (doc) {\n  if(  doc.class == 'depense' ) {\n      emit(doc.date, doc);\n  }\n}"
+      },
+      "depensesResultat": {
+        "reduce": "_sum",
+        "map": "function (doc) {\n  if(  doc.class == 'depense' ) {\n      emit(doc.date, Number(doc.montant) );\n  }\n}"
+      },
+      "provisionsFiches": {
+        "map": "function (doc) {\n  if(  doc.class == 'provision' ) {\n      emit(doc.date, doc);\n  }\n}"
+      },
+      "provisionsResultat": {
+        "reduce": "_sum",
+        "map": "function (doc) {\n  if(  doc.class == 'provision' ) {\n      emit(doc.date, Number(doc.montant) );\n  }\n}"
+      },
+      "recettesFrais": {
+        "reduce": "_sum",
+        "map": "function (doc) {\n  if( doc.class == 'recette' ) {\n    emit(doc.dates.depot, doc.reglements.commande.frais + doc.reglements.livraison.frais );\n  }\n}"
+      },
+      "compta": {
+        "map": "function (doc) {\n  if( doc.class == 'depense' ) {\n    if( doc.bank ) {\n      emit( doc.date, [-1*doc.montant, 0.0, 0.0, 0.0] );\n    } else {\n      emit( doc.date, [0.0, -1*doc.montant, 0.0, 0.0] );\n    }\n  }\n  if( doc.class == 'recette' ) {\n    if( doc.reglements.commande.montant == 0.0 && doc.reglements.livraison.montant == 0.0 ) {\n      emit( doc.dates.depot, [ 0.0, 0.0, doc.cout*98/100, 0.0 ] )\n    }\n    if( doc.reglements.commande.montant != 0.0 ) {\n      if( doc.reglements.commande.bank ) {\n        emit( doc.reglements.commande.date, [ \n          doc.reglements.commande.montant - doc.reglements.commande.frais, \n          0.0, \n          (doc.cout - doc.reglements.commande.montant)*98/100, \n          0.0 ])\n      } else {\n        emit( doc.reglements.commande.date, [ \n          0.0, \n          doc.reglements.commande.montant - doc.reglements.commande.frais, \n          (doc.cout - doc.reglements.commande.montant)*98/100, \n          0.0 ])\n      }\n    }\n    if( doc.reglements.livraison.montant != 0.0 ) {\n      if( doc.reglements.livraison.bank ) {\n        emit( doc.reglements.livraison.date, [ \n          doc.reglements.livraison.montant - doc.reglements.livraison.frais,\n          0.0, \n          0.0, \n          0.0 ])\n      } else {\n        emit( doc.reglements.livraison.date, [ \n          0.0, \n          doc.reglements.livraison.montant - doc.reglements.livraison.frais,\n          0.0,\n          0.0 ])\n      }\n    }\n  }  if( doc.class == 'provision' ) {\n    emit( doc.date, [ 0.0, 0.0, 0.0, doc.montant] )\n  }\n}",
+        "reduce": "function(key, values, rereduce) {\n  var result = new Array(0, 0, 0, 0);\n\n  for(var i = 0; i < values.length; i++) {\n    var value = values[i];\n    for (var j = 0; j < value.length; j++) {\n      result[j] += value[j];\n    }\n  }\n\n  return result;\n}"
+      },
+      "retraitsDepotsByDay": {
+        "map": "function (doc) {\n  if( doc.class == 'recette' && doc.dates.depot && doc.dates.depot[0] != 0 ) {\n    var depot = new Date( doc.dates.depot[0], ( doc.dates.depot[1] - 1) , doc.dates.depot[3] );\n    emit( depot.getDay(), [1,0] );\n  }\n  if( doc.class == 'recette' && doc.dates.retrait && doc.dates.retrait[0] != 0 ) {\n    var retrait = new Date( doc.dates.retrait[0], ( doc.dates.retrait[1] - 1) , doc.dates.retrait[3] );\n    emit( retrait.getDay(), [0,1] );\n  }\n}",
+        "reduce": "function(key, values, rereduce) {\n  var result = new Array(0, 0);\n\n  for(var i = 0; i < values.length; i++) {\n    var value = values[i];\n    for (var j = 0; j < value.length; j++) {\n      result[j] += value[j];\n    }\n  }\n\n  return result;\n}"
+      }
+    },
+    "language": "javascript"
+  }
