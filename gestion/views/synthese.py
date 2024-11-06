@@ -53,11 +53,11 @@ def synthese(request):
     compta = { 'bank': 0.0, 'real': 0.0, 'incomes': 0.0, 'provision': 0.0}
     for r in db.view( 'gestion/compta', startkey=end, endkey=[2024,1,1,1], descending=True, group_level=1 ) :
         compta['bank'] = round(r.value[0],2)
-        compta['real'] = round( compta['bank'] + r.value[1], 2)
-        compta['incomes'] = round( compta['real'] + r.value[2] - r.value[3], 2)
+        compta['real'] = round( compta['bank'] - r.value[1], 2)
+        compta['incomes'] = round( compta['real'] - r.value[2] - r.value[3], 2)
         compta['provision'] = round(r.value[3],2)
 
-    return render( request,'gestion/synthese.html', { 'compta': compta, 'day': reqday, 'ca': ca, 'depenses': depenses, 'provisions': provisions, 'frais': frais, 'reste': ca - depenses - provisions - frais } )
+    return render( request,'gestion/synthese.html', { 'compta': compta, 'day': reqday, 'ca': ca, 'depenses': depenses, 'provisions': provisions, 'frais': frais, 'reste': ca + depenses + frais - provisions } )
 
 
 

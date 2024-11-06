@@ -1,0 +1,61 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-2">
+      <div class="row justify-content-center">
+        <div class="col-sm-6 p-3 col-12">
+          <h2>Dépôts</h2>
+          {% comment %} le formulaire de parametrage de l'affichage{% endcomment %}
+          <form class="row my-3" method="post" action=".">
+            {% csrf_token %}
+            <div class="col-sm-3 col-12 p-1">
+              <input type="date" name="dd" value="{{ day }}">
+            </div>
+            <div class="col-sm-2 col-6 p-1">
+              <input type="submit" class="btn btn-primary" value="Changer">
+            </div>
+            <div class="col-sm-3 offset-sm-4 col-6 p-1 text-end">
+              <a class="btn btn-primary" role="submit" href="{% url 'synthese' %}" data-toggle="tooltip" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
+              <a href="{% url 'depot-detail' 'new'%}" class="btn btn-primary" title="Ajouter une provision"><i class="fa-solid fa-plus"></i></a>
+            </div>  
+          </form>
+          {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
+          <div class="container list-group list-group-flush">
+            {% for row in rows %}
+            <a href="/gestion/depot/{{ row.id }}/" class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-sm-3 col-12 text-start">
+                  {% if row.date %}{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}{% endif %}
+                </div>
+                <div class="col-sm-7 col-8 text-start text-truncate">{{ row.description }}</div>
+                <div class="col-sm-2 col-4 text-center">{{ row.montant|floatformat:2 }}</div>
+              </div>
+            </a>
+          {% endfor %}
+          </div>            
+        </div>
+        <div class="container mt-3">
+          <div class="row">
+            <div class="col-sm-6 offset-sm-3 col-12 my-3">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="text-center">Année</th>
+                    <th scope="col" class="text-center">Mois</th>  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-center">{{ report.year }}</td>
+                    <td class="text-center">{{ report.month }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

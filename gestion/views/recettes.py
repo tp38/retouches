@@ -66,9 +66,9 @@ def recette_detail(request, uuid):
         if request.POST.__contains__('acp_mode') :
             commande['mode'] = request.POST.get('acp_mode')
             if commande['mode'] == 'cb_sumup' :
-                commande['frais'] = round(commande['montant'] * (1 - 0.9825),2)
+                commande['frais'] = -1 * round(commande['montant'] * (1 - 0.9825),2)
             elif commande['mode'] == 'cb_ca22' :
-                commande['frais'] = round(commande['montant'] * (1 - 0.9827),2)
+                commande['frais'] = -1 * round(commande['montant'] * (1 - 0.9827),2)
             else :
                 commande['frais'] = 0
 
@@ -89,9 +89,9 @@ def recette_detail(request, uuid):
         if request.POST.__contains__('livraison_mode') :
             livraison['mode'] = request.POST.get('livraison_mode')
             if livraison['mode'] == 'cb_sumup' :
-                livraison['frais'] = round(commande['montant'] * (1 - 0.9825),2)
+                livraison['frais'] = -1 * round(livraison['montant'] * (1 - 0.9825),2)
             elif livraison['mode'] == 'cb_ca22' :
-                livraison['frais'] = round(commande['montant'] * (1 - 0.9827),2)
+                livraison['frais'] = -1 * round(livraison['montant'] * (1 - 0.9827),2)
             else :
                 livraison['frais'] = 0
 
@@ -191,7 +191,7 @@ def recettes_liste(request):
         view = "gestion/recettesFiches"
 
     data = []
-    for r in db.view( view, startkey=[end,{}], endkey=start, descending=True ):
+    for r in db.view( view, startkey=[end,{}], endkey=[start,{}], descending=True ):
         doc = db[r.id]
         data.append( doc )
 

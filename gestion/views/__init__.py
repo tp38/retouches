@@ -4,3 +4,4 @@ from .depenses import *
 from .provisions import *
 from .synthese import *
 from .stats import *
+from .depot import *
