@@ -24,6 +24,15 @@
           <input type="text" class="form-control" id="montantInput"  name="montant" value="{{ row.montant }}">
         </div>
         <div class="row mt-3">
+          <label for="modeSelect" class="form-label">Mode</label>
+          <select class="form-select" id="modeSelect" aria-label="depenseMode" name="mode">
+            {% if row.mode == "chq" %}<option value="chq" selected>Chq</option>{% else %}<option value="chq">Chq</option>{% endif %}
+            {% if row.mode == "cb" %}<option value="cb" selected>CB</option>{% else %}<option value="cb">CB</option>{% endif %}
+            {% if row.mode == "vrt" %}<option value="vrt" selected>Vrt</option>{% else %}<option value="vrt">Vrt</option>{% endif %}
+            {% if row.mode == "esp" %}<option value="esp" selected>Esp</option>{% else %}<option value="esp">Esp</option>{% endif %}
+          </select>
+        </div>
+        <div class="row mt-3">
           <div class="col-sm-2 col-6">
             <label for="bankInput">pointé : </label>
           </div>

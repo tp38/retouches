@@ -41,6 +41,10 @@ def depense_detail(request, uuid):
             except:
                 doc[''] = 0.0
 
+        # save mode if exists 
+        if request.POST.__contains__( 'mode' ) :
+            doc['mode'] = request.POST.get('mode')
+
         # save bank_state if exists
         if request.POST.__contains__('bank') :
             doc['bank'] = request.POST.get('bank')
