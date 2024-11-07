@@ -53,11 +53,39 @@ def synthese(request):
     compta = { 'bank': 0.0, 'real': 0.0, 'incomes': 0.0, 'provision': 0.0}
     for r in db.view( 'gestion/compta', startkey=end, endkey=[2024,1,1,1], descending=True, group_level=1 ) :
         compta['bank'] = round(r.value[0],2)
-        compta['real'] = round( compta['bank'] + r.value[1], 2)
-        compta['incomes'] = round( compta['real'] + r.value[3], 2)
+        compta['real'] = round( r.value[0] + r.value[1], 2)
+        compta['incomes'] = round( r.value[0] + r.value[1] + r.value[2] - r.value[3], 2)
         compta['provision'] = round(r.value[3],2)
 
     return render( request,'gestion/synthese.html', { 'compta': compta, 'day': reqday, 'ca': ca, 'depenses': depenses, 'provisions': provisions, 'frais': frais, 'reste': ca + depenses + frais - provisions } )
 
+
+def unchecked( request, uuid ) :
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+    db = s[settings.DB_GESTION]
+
+    if request.method == "GET":
+        if uuid == 'none' :
+            rows = []
+            for r in db.view( 'gestion/unchecked'  ) :
+                doc = db[r.key]
+                rows.append( doc )
+            return render( request,'gestion/unchecked.html', { 'rows': rows } )
+        else :
+            doc = db[uuid]
+            if doc['class'] == 'recette' :
+                return redirect( f"/gestion/recette/{uuid}" )
+            elif doc['class'] == 'depense' :
+                return redirect( f"/gestion/depense/{uuid}")
+            elif doc['class'] == 'depot' :
+                return redirect( f"/gestion/depot/{uuid}")
+            else :
+                rows = []
+                for r in db.view( 'gestion/unchecked'  ) :
+                    doc = db[r.key]
+                    rows.append( doc )
+                return render( request,'gestion/unchecked.html', { 'rows': rows } )
 
 

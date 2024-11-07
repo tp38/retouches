@@ -6,6 +6,7 @@ urlpatterns = [
     path( 'logout/', views.logout ),
 
     path( 'synthese/', views.synthese, name='synthese' ),
+    path( 'unchecked/<str:uuid>/', views.unchecked, name='unchecked' ),
     path( 'recettes/', views.recettes_liste, name='recettes-list' ),
     path( 'recette/<str:uuid>/', views.recette_detail, name='recette-detail' ),
     path( 'depenses/', views.depenses_liste, name='depenses-list' ),
