@@ -81,19 +81,19 @@ def depenses_liste(request):
     day = 0
     for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
         if r.key[3] == reqday[3] :
-            day = r.value
+            day = round( r.value, 2)
             break
 
     week = 0
     for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
         if r.key[2] == reqday[2] :
-            week = r.value
+            week = round( r.value, 2 )
             break
 
     month = 0
     for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
-            month = r.value
+            month = round( r.value, 2 )
             break
 
     report = { 'day': day, 'week': week, 'month': month }

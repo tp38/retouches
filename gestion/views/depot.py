@@ -74,7 +74,7 @@ def depots_liste(request):
     month = 0
     for r in db.view( 'gestion/depotsResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
-            month = r.value
+            month = round( r.value, 2 )
             break
 
     start = DateStringToArray( f"{reqday[0]}-01-01" )
@@ -82,7 +82,7 @@ def depots_liste(request):
     year = 0
     for r in db.view( 'gestion/depotsResultat', startkey=end, endkey=start, descending=True, group=True, group_level=1  ) :
         if r.key[0] == reqday[0] :
-            year = r.value
+            year = round( r.value, 2 )
             break
 
     report = { 'month': month, 'year': year }
