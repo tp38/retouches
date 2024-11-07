@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container mt-3">
       <div class="row justify-content-center">
-        <form class="col-sm-8 col-12" method="post" action="/gestion/recette/{{ id }}/">
+        <form class="col-sm-8 col-12" method="post" action="{% url 'recette-detail' id %}">
           {% csrf_token %}
           <div class="row justify-content-center">
             {% comment %} first line : carnet - numero {% endcomment %}

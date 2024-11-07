@@ -29,7 +29,7 @@
           <div class="container mt-4">
             <div class="row">
               <div class="col-sm-8 offset-sm-2 col-12">
-                <a href="/gestion/recettes/" class="list-group-item list-group-item-action">
+                <a href="{% url 'recettes-list' %}" class="list-group-item list-group-item-action">
                   <div class="row mt-1 border-bottom">
                     <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
                       CA :
@@ -39,7 +39,7 @@
                     </div>
                   </div>
                 </a>
-                <a href="/gestion/provisions/" class="list-group-item list-group-item-action">
+                <a href="{% url 'provisions-list' %}" class="list-group-item list-group-item-action">
                   <div class="row mt-1 border-bottom">
                     <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
                       Provisions :
@@ -49,7 +49,7 @@
                     </div>
                   </div>
                 </a>
-                <a href="/gestion/depenses/" class="list-group-item list-group-item-action">
+                <a href="{% url 'depenses-list' %}" class="list-group-item list-group-item-action">
                   <div class="row mt-1 border-bottom">
                     <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
                       Dépenses :
@@ -87,7 +87,7 @@
             </div>  
           </div>
           <div class="container mt-4">
-            <form method="post" action="/gestion/synthese/">
+            <form method="post" action="{% url 'synthese' %}">
               {% csrf_token %}
               <div class="row mt-3">
                 <div class="col-12 col-sm-4 offset-sm-4">

@@ -23,7 +23,7 @@
           {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
           <div class="container list-group list-group-flush">
             {% for row in rows %}
-            <a href="/gestion/depense/{{ row.id }}/" class="list-group-item list-group-item-action">
+            <a href="{% url 'depense-detail' row.id %}" class="list-group-item list-group-item-action">
               {% if row.bank %}
               <div class="row text-primary">
               {% else %}

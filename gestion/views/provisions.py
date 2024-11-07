@@ -66,13 +66,13 @@ def provisions_liste(request):
     start = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-01" )
     end = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-{calendar.monthrange(reqday.year, reqday.month)[1]:02d}" )
 
-    for r in db.view( "gestion/provisionsFiches", startkey=end, endkey=start, descending=True ):
+    for r in db.view( "provisions/Fiches", startkey=end, endkey=start, descending=True ):
         doc = db[r.id]
         rows.append( doc )
 
     reqday = datetimeToArray( reqday )
     month = 0
-    for r in db.view( 'gestion/provisionsResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'provisions/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             month = round( r.value, 2 )
             break
@@ -80,7 +80,7 @@ def provisions_liste(request):
     start = DateStringToArray( f"{reqday[0]}-01-01" )
     end = DateStringToArray( f"{reqday[0]}-12-31" )
     year = 0
-    for r in db.view( 'gestion/provisionsResultat', startkey=end, endkey=start, descending=True, group=True, group_level=1  ) :
+    for r in db.view( 'provisions/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=1  ) :
         if r.key[0] == reqday[0] :
             year = round( r.value, 2 )
             break

@@ -123,7 +123,7 @@ def recette_detail(request, uuid):
             uuid = uuid4()
             carnet = 0
             numero = 0
-            for r in db.view( 'gestion/recettesFichesByCarnetNumero',  descending=True, limit=1 ):
+            for r in db.view( 'recettes/FichesByCarnetNumero',  descending=True, limit=1 ):
                 doc = db[r.id]
                 carnet = doc['carnet']
                 numero = doc['numero']
@@ -186,9 +186,9 @@ def recettes_liste(request):
     end = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-{calendar.monthrange(reqday.year, reqday.month)[1]:02d}" )
 
     if mode == "En_cours" :
-        view = "gestion/recettesFichesEnCours"
+        view = "recettes/FichesEnCours"
     else:
-        view = "gestion/recettesFiches"
+        view = "recettes/Fiches"
 
     data = []
     for r in db.view( view, startkey=[end,{}], endkey=[start,{}], descending=True ):
@@ -197,19 +197,19 @@ def recettes_liste(request):
 
     reqday = datetimeToArray( reqday )
     day = 0
-    for r in db.view( 'gestion/recettesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
+    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
         if r.key[3] == reqday[3] :
             day = r.value
             break
 
     week = 0
-    for r in db.view( 'gestion/recettesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
+    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
         if r.key[2] == reqday[2] :
             week = r.value
             break
 
     month = 0
-    for r in db.view( 'gestion/recettesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             month = r.value
             break

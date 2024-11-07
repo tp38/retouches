@@ -73,25 +73,25 @@ def depenses_liste(request):
     start = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-01" )
     end = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-{calendar.monthrange(reqday.year, reqday.month)[1]:02d}" )
 
-    for r in db.view( "gestion/depensesFiches", startkey=end, endkey=start, descending=True ):
+    for r in db.view( "depenses/Fiches", startkey=end, endkey=start, descending=True ):
         doc = db[r.id]
         rows.append( doc )
 
     reqday = datetimeToArray( reqday )
     day = 0
-    for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
+    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
         if r.key[3] == reqday[3] :
             day = round( r.value, 2)
             break
 
     week = 0
-    for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
+    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
         if r.key[2] == reqday[2] :
             week = round( r.value, 2 )
             break
 
     month = 0
-    for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             month = round( r.value, 2 )
             break

@@ -9,7 +9,7 @@
           {% comment %}Le tableau des operations non pointées{% endcomment%}
           <div class="container list-group list-group-flush">
             {% for row in rows %}
-            <a href="/gestion/unchecked/{{ row.id }}/" class="list-group-item list-group-item-action">
+            <a href="{% url 'unchecked' row.id %}" class="list-group-item list-group-item-action">
               <div class="row">
                 <div class="col-sm-3 col-12 text-start">
                   {% if row.class == 'recette' %}

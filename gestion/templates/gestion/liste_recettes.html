@@ -37,7 +37,7 @@
             {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
             <div class="container list-group list-group-flush">
               {% for row in rows %}
-                <a href="/gestion/recette/{{ row.id }}/" class="list-group-item list-group-item-action">
+                <a href="{% url 'recette-detail' row.id %}" class="list-group-item list-group-item-action">
                   {% if row.dates.retrait|length != 0 %}
                   <div class="container text-primary">
                   {% elif row.reglements.commande.montant or row.reglements.livraison.montant %}

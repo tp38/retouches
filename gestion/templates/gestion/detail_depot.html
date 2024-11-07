@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container mt-3">
       <h2>Dépot</h2>
-      <form class="col-sm-6 offset-sm-3 col-12 px-3" method="post" action="/gestion/provision/{{ id }}/">
+      <form class="col-sm-6 offset-sm-3 col-12 px-3" method="post" action="{% url 'provision-detail' id %}">
         {% csrf_token %}
         <div class="row mt-3">
           <label for="dateInput">Date</label>

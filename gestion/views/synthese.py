@@ -27,31 +27,31 @@ def synthese(request):
 
     reqday = datetimeToArray( reqday )
     ca = 0
-    for r in db.view( 'gestion/recettesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             ca = round(r.value,2)
             break
 
     depenses = 0
-    for r in db.view( 'gestion/depensesResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             depenses = round(r.value,2)
             break
 
     provisions = 0
-    for r in db.view( 'gestion/provisionsResultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'provisions/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             provisions = round(r.value,2)
             break
 
     frais = 0
-    for r in db.view( 'gestion/recettesFrais', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+    for r in db.view( 'recettes/Frais', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
             frais = round(r.value,2)
             break
 
     compta = { 'bank': 0.0, 'real': 0.0, 'incomes': 0.0, 'provision': 0.0}
-    for r in db.view( 'gestion/compta', startkey=end, endkey=[2024,1,1,1], descending=True, group_level=1 ) :
+    for r in db.view( 'gestion/soldesBancaire', startkey=end, endkey=[2024,1,1,1], descending=True, group_level=1 ) :
         compta['bank'] = round(r.value[0],2)
         compta['real'] = round( r.value[0] + r.value[1], 2)
         compta['incomes'] = round( r.value[0] + r.value[1] + r.value[2] - r.value[3], 2)

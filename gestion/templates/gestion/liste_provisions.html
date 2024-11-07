@@ -23,7 +23,7 @@
           {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
           <div class="container list-group list-group-flush">
             {% for row in rows %}
-            <a href="/gestion/provision/{{ row.id }}/" class="list-group-item list-group-item-action">
+            <a href="{% url 'provision-detail' row.id %}" class="list-group-item list-group-item-action">
               <div class="row">
                 <div class="col-sm-3 col-8 text-start">
                   {% if row.date %}{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}{% endif %}

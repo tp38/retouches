@@ -26,19 +26,19 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/gestion/synthese">Synthèse</a>
+                  <a class="nav-link" aria-current="page" href="{% url 'synthese' %}">Synthèse</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/gestion/unchecked/none">Non pointés</a>
+                  <a class="nav-link" aria-current="page" href="{% url 'unchecked' 'none' %}">Non pointés</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/gestion/depots">Dépots</a>
+                  <a class="nav-link" aria-current="page" href="{% url 'depots-list' %}">Dépots</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/gestion/stats/inoutbyday">Entrées-Sorties</a>
+                  <a class="nav-link" aria-current="page" href="{% url 'in_out_by_day' %}">Entrées-Sorties</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/gestion/logout/">Logout</a>
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>         
                </ul>
             </div>
