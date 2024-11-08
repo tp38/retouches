@@ -60,22 +60,19 @@
                         {% endif %}
                       </div>
                       <div class="col-sm-3 col-3 text-end">
-                        {% if row.reglements.commande.mode == 'esp' and row.reglements.commande.montant != 0 %}
-                        <i class="fa-solid fa-money-bill"></i>
-                        {% endif %}
                         {% if row.reglements.commande.montant != 0 %}
                           {{ row.reglements.commande.montant|floatformat:2 }} 
                         {% endif %}
                         {% if row.reglements.commande.frais != 0 %}
                         ({{ row.reglements.commande.frais|floatformat:3 }})
                         {% endif %}
+                        {% if row.reglements.commande.mode == 'esp' and row.reglements.commande.montant != 0 %}
+                        <i class="fa-solid fa-money-bill"></i>
+                        {% endif %}
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-sm-3 offset-sm-6 col-9 text-start">
-                        {% if row.reglements.livraison.mode == 'esp' and row.reglements.livraison.montant != 0  %}
-                        <i class="fa-solid fa-money-bill"></i>
-                        {% endif %}
                         {% if row.reglements.livraison.date.0 != 0 %}
                           L: {{row.reglements.livraison.date.0}}-{{row.reglements.livraison.date.1|twodigits}}-{{row.reglements.livraison.date.3|twodigits}}
                         {% endif %}
@@ -86,6 +83,9 @@
                         {% endif %}
                         {% if row.reglements.livraison.frais != 0 %}
                         ({{ row.reglements.livraison.frais|floatformat:3 }})
+                        {% endif %}
+                        {% if row.reglements.livraison.mode == 'esp' and row.reglements.livraison.montant != 0  %}
+                        <i class="fa-solid fa-money-bill"></i>
                         {% endif %}
                       </div>
                     </div>

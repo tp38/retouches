@@ -26,7 +26,7 @@
             <a href="{% url 'provision-detail' row.id %}" class="list-group-item list-group-item-action">
               <div class="row">
                 <div class="col-sm-3 col-8 text-start">
-                  {% if row.date %}{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}{% endif %}
+                  {% if row.date.0 != 0 %}{{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}{% endif %}
                 </div>
                 <div class="col-sm-2 col-4 text-center">{{ row.type|upper }}</div>
                 <div class="col-sm-5 col-8 text-start text-truncate">{{ row.description }}</div>

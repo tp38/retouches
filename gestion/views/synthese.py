@@ -44,12 +44,6 @@ def synthese(request):
             provisions = round(r.value,2)
             break
 
-    depot = 0
-    for r in db.view( 'depots/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
-        if r.key[1] == reqday[1] :
-            depot = round(r.value,2)
-            break
-
     frais = 0
     for r in db.view( 'recettes/Frais', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
         if r.key[1] == reqday[1] :
@@ -58,12 +52,22 @@ def synthese(request):
 
     compta = { 'bank': 0.0, 'real': 0.0, 'incomes': 0.0, 'provision': 0.0}
     for r in db.view( 'gestion/soldesBancaire', startkey=end, endkey=[2024,1,1,1], descending=True, group_level=1 ) :
-        compta['bank'] = round(r.value[0] + depot,2)
+        compta['bank'] = round(r.value[0],2)
         compta['real'] = round( r.value[0] + r.value[1], 2)
         compta['incomes'] = round( r.value[0] + r.value[1] + r.value[2] - r.value[3], 2)
         compta['provision'] = round(r.value[3],2)
 
-    return render( request,'gestion/synthese.html', { 'compta': compta, 'day': reqday, 'ca': ca, 'depenses': depenses, 'provisions': provisions, 'frais': frais, 'reste': ca + depenses + frais - provisions } )
+    urssaf = round( ca * 0.212, 2)
+
+    return render( request,'gestion/synthese.html', { 
+        'compta': compta, 
+        'day': reqday, 
+        'ca': ca, 
+        'urssaf': urssaf, 
+        'depenses': depenses, 
+        'provisions': provisions, 
+        'frais': frais, 
+        'bilan': ca + depenses + frais - provisions - urssaf} )
 
 
 def unchecked( request, uuid ) :

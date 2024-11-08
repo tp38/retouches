@@ -39,6 +39,14 @@
                     </div>
                   </div>
                 </a>
+                <div class="row mt-1 border-bottom">
+                  <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
+                    Urssaf :
+                  </div>
+                  <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-secondary fw-bold">
+                    {{ urssaf|floatformat:2 }}
+                  </div>
+                </div>
                 <a href="{% url 'provisions-list' %}" class="list-group-item list-group-item-action">
                   <div class="row mt-1 border-bottom">
                     <div class="col-sm-5 offset-sm-1 col-7 my-2 text-start">
@@ -69,18 +77,14 @@
                 </div>
                 <div class="row mt-1 text-enter border-bottom">
                   <div class="col-sm-5 offset-sm-1 col-7 my-2">
-                    Reste :
+                    Bilan :
                   </div>
-                  {% if reste < 1200 %}
+                  {% if bilan < 1200 %}
                   <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-warning fw-bold">
                   {% else %}
                   <div class="col-sm-3 offset-sm-2 col-5 my-2 text-end text-success fw-bold">
                   {% endif %}
-                  {% if reste < 0 %}
-                      0.00
-                  {% else %}
-                      {{ reste|floatformat:2 }}
-                  {% endif %}
+                    {{ bilan|floatformat:2 }}
                   </div>
                 </div>    
               </div>

@@ -11,7 +11,7 @@
               Vouler-vous vraiment supprimer cette provision ?
             </div>
           </div>
-          <form method="post" action="{% url 'provision-detail' id %}/">
+          <form method="post" action="{% url 'provision-delete' id %}">
             {% csrf_token %}
             <div class="row mt-3">
               <div class="col-sm-3 offset-sm-2 col-5">Date :</div>
