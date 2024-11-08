@@ -2,139 +2,154 @@
 {% load compta_extras %}
 
 {% block content %}
-    <div class="container mt-2 ">
-      <div class="row justify-content-center">
+<div class="container mt-2 ">
+  <div class="row justify-content-center">
+    <div class="col-sm-8 col-12">
+      <h2>Recettes</h2>
+      {% comment %} le formulaire de parametrage de l'affichage{% endcomment %}
+      <form class="row mt-3" method="post" action=".">
+        {% csrf_token %}
+        <div class="col-sm-3 offset-sm-1 p-1">
+          <input type="date" name="dd" value="{{ day }}">
+        </div>
+        <div class="col-sm-2 col-12 p-1">
+            <select class="form-select"  id="modeSelect" aria-label="Mode" name="mode">
+                {% if row.mode == "ALL" %}
+                <option value="Toutes" selected>Toutes</option>
+                <option value="En_cours">En cours</option>
+                {% else %}
+                <option value="Toutes">Toutes</option>
+                <option value="En_cours" selected>En cours</option>
+                {% endif %}
+            </select>
+        </div>  
+        <div class="col-sm-3 col-6 p-1 text-center">
+          <input type="submit" class="btn  btn-primary" value="Changer">
+        </div>
+        <div class="col-sm-3 col-6 p-1 text-center">
+          <a href="{% url 'synthese' %}" class="btn btn-primary" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
+          <a href="{% url 'recette-detail' 'new'%}" class="btn btn-primary" title="Ajouter une recette"><i class="fa-solid fa-plus"></i></a>
+        </div>  
+      </form>
+      {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
+      <div class="row mt-3 justify-content-center">
         <div class="col-sm-8 col-12">
-          <h2>Recettes</h2>
-          <div class="container mt-3">
-            {% comment %} le formulaire de parametrage de l'affichage{% endcomment %}
-            <form class="row" method="post" action=".">
-              {% csrf_token %}
-              <div class="col-sm-3 offset-sm-1 p-1">
-                <input type="date" name="dd" value="{{ day }}">
-              </div>
-              <div class="col-sm-2 col-12 p-1">
-                  <select class="form-select"  id="modeSelect" aria-label="Mode" name="mode">
-                      {% if row.mode == "ALL" %}
-                      <option value="Toutes" selected>Toutes</option>
-                      <option value="En_cours">En cours</option>
+          <div class="row list-group list-group-flush">
+            {% for row in rows %}
+              <a href="{% url 'recette-detail' row.id %}" class="list-group-item list-group-item-action">
+                {% if row.dates.retrait|length != 0 %}
+                <div class="row text-primary">
+                {% elif row.reglements.commande.montant or row.reglements.livraison.montant %}
+                <div class="row text-warning">
+                {% else %}
+                <div class="row text-secondary">
+                {% endif %}
+                  <div class="col-sm-2 offset-sm-1 col-4">
+                    <div class="row">
+                      {{ row.carnet }}-{{ row.numero }}
+                    </div>
+                    <div class="row fw-bold">
+                      T: {{ row.cout|floatformat:0 }}€
+                    </div>
+                    <div class="row">
+                      {{ row.client.nom }}
+                    </div>
+                  </div>
+                  <div class="col-sm-4 offset-sm-1 col-4">
+                    <div class="row justify-content-center">
+                      Dépot
+                    </div>
+                    <div class="row justify-content-center">
+                      {% if row.reglements.commande.date.0 != 0  %}
+                        <div class="text-center d-block d-sm-none">{{row.reglements.commande.date.3|twodigits}}/{{row.reglements.commande.date.1|twodigits}}</div>
+                        <div class="text-center d-none d-sm-block">{{row.reglements.commande.date.3|twodigits}}/{{row.reglements.commande.date.1|twodigits}}/{{row.reglements.commande.date.0}}</div>
                       {% else %}
-                      <option value="Toutes">Toutes</option>
-                      <option value="En_cours" selected>En cours</option>
+                        <div class="text-center d-block d-sm-none">{{row.dates.depot.3|twodigits}}/{{row.dates.depot.1|twodigits}}</div>
+                        <div class="text-center d-none d-sm-block">{{row.dates.depot.3|twodigits}}/{{row.dates.depot.1|twodigits}}/{{row.dates.depot.0}}</div>
                       {% endif %}
-                  </select>
-              </div>  
-              <div class="col-sm-3 col-6 p-1 text-center">
-                <input type="submit" class="btn  btn-primary" value="Changer">
-              </div>
-              <div class="col-sm-3 col-6 p-1 text-center">
-                <a href="{% url 'synthese' %}" class="btn btn-primary" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
-                <a href="{% url 'recette-detail' 'new'%}" class="btn btn-primary" title="Ajouter une recette"><i class="fa-solid fa-plus"></i></a>
-              </div>  
-            </form>
-          </div>
-          <div class="container mt-3">
-            {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
-            <div class="container list-group list-group-flush">
-              {% for row in rows %}
-                <a href="{% url 'recette-detail' row.id %}" class="list-group-item list-group-item-action">
-                  {% if row.dates.retrait|length != 0 %}
-                  <div class="container text-primary">
-                  {% elif row.reglements.commande.montant or row.reglements.livraison.montant %}
-                  <div class="container text-warning">
-                  {% else %}
-                  <div class="container text-secondary">
-                  {% endif %}
-                    <div class="row">
-                      <div class="col-sm-2 col-4 fw-bold">
-                        {{ row.carnet }}-{{ row.numero }}
-                      </div>
-                      <div class="col-sm-3 col-8 fw-bold">
-                        T: {{ row.cout|floatformat:2 }}
-                      </div>
-                      <div class="col-sm-3 offset-sm-1 col-9 text-start">
-                        {% if row.reglements.commande.date.0 != 0  %}
-                          D: {{row.reglements.commande.date.0}}-{{row.reglements.commande.date.1|twodigits}}-{{row.reglements.commande.date.3|twodigits}}
-                        {% else %}
-                          D: {{row.dates.depot.0}}-{{row.dates.depot.1|twodigits}}-{{row.dates.depot.3|twodigits}}
-                        {% endif %}
-                      </div>
-                      <div class="col-sm-3 col-3 text-end">
-                        {% if row.reglements.commande.montant != 0 %}
-                          {{ row.reglements.commande.montant|floatformat:2 }} 
-                          {% if row.reglements.commande.bank %}
-                          <i class="fa-solid fa-piggy-bank"></i>
-                          {% endif %}                          
-                        {% endif %}
-                        {% if row.reglements.commande.frais != 0 %}
-                          ({{ row.reglements.commande.frais|floatformat:3 }})
-                        {% endif %}
+                    </div>
+                    <div class="row justify-content-center">
+                      {% if row.reglements.commande.montant != 0 %}
+                        {{ row.reglements.commande.montant|floatformat:0 }}€ 
+                      {% endif %}
+                      {% if row.reglements.commande.frais != 0 %}
+                        ({{ row.reglements.commande.frais|floatformat:2 }})
+                      {% endif %}
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col text-center">
                         {% if row.reglements.commande.mode == 'esp' and row.reglements.commande.montant != 0 %}
-                          <i class="fa-solid fa-money-bill"></i>
+                        <i class="fa-solid fa-piggy-bank"></i>
+                        {% elif row.reglements.commande.bank and row.reglements.commande.montant != 0  %}
+                        <i class="fa-solid fa-building-columns"></i>
                         {% endif %}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-3 offset-sm-6 col-9 text-start">
-                        {% if row.reglements.livraison.date.0 != 0 %}
-                          L: {{row.reglements.livraison.date.0}}-{{row.reglements.livraison.date.1|twodigits}}-{{row.reglements.livraison.date.3|twodigits}}
-                        {% endif %}
-                      </div>
-                      <div class="col-sm-3 col-3 text-end">
-                        {% if row.reglements.livraison.montant != 0 %}
-                          {{ row.reglements.livraison.montant|floatformat:2 }} 
-                          {% if row.reglements.livraison.bank %}
-                          <i class="fa-solid fa-piggy-bank"></i>
-                          {% endif %}                          
-                        {% endif %}
-                        {% if row.reglements.livraison.frais != 0 %}
-                          ({{ row.reglements.livraison.frais|floatformat:3 }})
-                        {% endif %}
-                        {% if row.reglements.livraison.mode == 'esp' and row.reglements.livraison.montant != 0  %}
-                          <i class="fa-solid fa-money-bill"></i>
-                        {% endif %}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-6">
-                        {{ row.client.nom }}
+      
                       </div>
                     </div>
                   </div>
-                </a>
-              {% endfor %}
-            </div>    
-          </div>
-          <div class="container mt-3">
-            <div class="row">
-              <div class="col-sm-8 offset-sm-2 col-12 my-3">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col" class="text-center">Jour</th>
-                      <th scope="col" class="text-center">Semaine</th>
-                      <th scope="col" class="text-center">Mois</th>  
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Cible</th>
-                      <td class="text-center">133</td>
-                      <td class="text-center">495</td>
-                      <td class="text-center">2333</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Réel</th>
-                      <td {% if report.day > 133 %}class="text-center text-success fw-bold"{% else %}class="text-center text-warning"{% endif %} >{{ report.day }}</td>
-                      <td {% if report.week > 495 %}class="text-center text-success fw-bold"{% else %}class="text-center text-warning"{% endif %}>{{ report.week }}</td>
-                      <td {% if report.month > 2333 %}class="text-center text-success fw-bold"{% else %}class="text-center text-warning"{% endif %}>{{ report.month }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>  
-          </div>
+                  <div class="col-sm-4 col-4">
+                    <div class="row justify-content-center">
+                      Retrait
+                    </div>
+                    <div class="row justify-content-center">
+                      {% if row.reglements.livraison.date.0 != 0  %}
+                        <div class="text-center d-block d-sm-none">{{row.reglements.livraison.date.3|twodigits}}/{{row.reglements.livraison.date.1|twodigits}}</div>
+                        <div class="text-center d-none d-sm-block">{{row.reglements.livraison.date.3|twodigits}}/{{row.reglements.livraison.date.1|twodigits}}/{{row.reglements.livraison.date.0}}</div>
+                      {% endif %}
+                    </div>
+                    <div class="row justify-content-center">
+                      {% if row.reglements.livraison.montant != 0 %}
+                        {{ row.reglements.livraison.montant|floatformat:0 }}€ 
+                      {% endif %}
+                      {% if row.reglements.livraison.frais != 0 %}
+                        ({{ row.reglements.livraison.frais|floatformat:2 }})
+                      {% endif %}
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col text-center">
+                        {% if row.reglements.livraison.mode == 'esp' and row.reglements.livraison.montant != 0 %}
+                        <i class="fa-solid fa-piggy-bank"></i>
+                        {% elif row.reglements.livraison.bank and row.reglements.livraison.montant != 0  %}
+                        <i class="fa-solid fa-building-columns"></i>
+                        {% endif %}
+                      </div>
+                    </div>                
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+          </div>    
+        </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-sm-8 offset-sm-2 col-12 my-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col" class="text-center">Jour</th>
+                <th scope="col" class="text-center">Semaine</th>
+                <th scope="col" class="text-center">Mois</th>  
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Cible</th>
+                <td class="text-center">133</td>
+                <td class="text-center">495</td>
+                <td class="text-center">2333</td>
+              </tr>
+              <tr>
+                <th scope="row">Réel</th>
+                <td {% if report.day > 133 %}class="text-center text-success fw-bold"{% else %}class="text-center text-warning"{% endif %} >{{ report.day }}</td>
+                <td {% if report.week > 495 %}class="text-center text-success fw-bold"{% else %}class="text-center text-warning"{% endif %}>{{ report.week }}</td>
+                <td {% if report.month > 2333 %}class="text-center text-success fw-bold"{% else %}class="text-center text-warning"{% endif %}>{{ report.month }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>  
+  </div>
+</div>
 {% endblock %}
