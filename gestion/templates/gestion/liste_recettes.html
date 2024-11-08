@@ -62,12 +62,15 @@
                       <div class="col-sm-3 col-3 text-end">
                         {% if row.reglements.commande.montant != 0 %}
                           {{ row.reglements.commande.montant|floatformat:2 }} 
+                          {% if row.reglements.commande.bank %}
+                          <i class="fa-solid fa-piggy-bank"></i>
+                          {% endif %}                          
                         {% endif %}
                         {% if row.reglements.commande.frais != 0 %}
-                        ({{ row.reglements.commande.frais|floatformat:3 }})
+                          ({{ row.reglements.commande.frais|floatformat:3 }})
                         {% endif %}
                         {% if row.reglements.commande.mode == 'esp' and row.reglements.commande.montant != 0 %}
-                        <i class="fa-solid fa-money-bill"></i>
+                          <i class="fa-solid fa-money-bill"></i>
                         {% endif %}
                       </div>
                     </div>
@@ -80,12 +83,15 @@
                       <div class="col-sm-3 col-3 text-end">
                         {% if row.reglements.livraison.montant != 0 %}
                           {{ row.reglements.livraison.montant|floatformat:2 }} 
+                          {% if row.reglements.livraison.bank %}
+                          <i class="fa-solid fa-piggy-bank"></i>
+                          {% endif %}                          
                         {% endif %}
                         {% if row.reglements.livraison.frais != 0 %}
-                        ({{ row.reglements.livraison.frais|floatformat:3 }})
+                          ({{ row.reglements.livraison.frais|floatformat:3 }})
                         {% endif %}
                         {% if row.reglements.livraison.mode == 'esp' and row.reglements.livraison.montant != 0  %}
-                        <i class="fa-solid fa-money-bill"></i>
+                          <i class="fa-solid fa-money-bill"></i>
                         {% endif %}
                       </div>
                     </div>
