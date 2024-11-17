@@ -1,0 +1,35 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-2">
+      <div class="d-flex justify-content-center">
+        <div class="col-sm-4 p-3 col-12">
+          <h2>Villes</h2>
+          <div class="row my-3 justify-content-end">
+            <div class="col-sm-2 col-4 p-1">
+              <a class="btn btn-primary" role="submit" href="{% url 'synthese' %}" data-toggle="tooltip" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
+            </div>  
+          </div>
+          {% comment %}Le tableau des recettes du mois selectionné{% endcomment%}
+          <div class="list-group list-group-flush">
+            {% for row in rows %}
+            <div class="row">
+              <div class="col-sm-8 col-10 text-start">
+                {% if row.ville == "" %}
+                  <p class="font-italic text-info">Non précisé</p>
+                {% else %}
+                  <p>{{ row.ville|upper }}</p>
+                {% endif %}
+              </div>
+              <div class="col-sm-4 col-2 text-end">
+                {{ row.nb }}
+              </div>
+            </div>
+          {% endfor %}
+          </div>            
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

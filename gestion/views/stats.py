@@ -32,4 +32,19 @@ def inOutByDay(request):
 
 
 
+def getTowns(request):
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+
+    db = s[settings.DB_GESTION]
+
+
+    rows = []
+    for r in db.view( 'stats/towns', group_level=1  ) :
+        rows.append( { "ville": r.key, "nb": r.value } )
+            
+    rows.sort( key= lambda x: x.get('nb'), reverse=True )
+    
+    return render( request,'gestion/liste_villes.html', {'rows': rows} )
 

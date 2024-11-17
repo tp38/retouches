@@ -17,4 +17,5 @@ urlpatterns = [
     path( 'depots/', views.depots_liste, name='depots-list' ),
     path( 'depot/<str:uuid>/', views.depot_detail, name='depot-detail' ),
     path( 'stats/inoutbyday', views.inOutByDay, name='in_out_by_day' ),
+    path( 'stats/tows', views.getTowns, name='town-list' ),
 ]
