@@ -11,33 +11,33 @@
               <a class="btn btn-primary" role="submit" href="{% url 'synthese' %}" data-toggle="tooltip" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-3">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a href="{% url 'recettes_depenses' 1 %}" class="nav-link {% if group == 1 %}active{% endif %}" aria-selected="{% if group == 1 %}true{% else %}false{% endif %}">Année</a>
+                <a href="{% url 'recettes_depenses' 4 %}" class="nav-link {% if group == 4 %}active{% endif %}" aria-selected="{% if group == 4 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 4 %}true{% else %}false{% endif %}">Jour</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'recettes_depenses' 2 %}" class="nav-link {% if group == 2 %}active{% endif %}" aria-selected="{% if group == 2 %}true{% else %}false{% endif %}" >Mois</a>
+                <a href="{% url 'recettes_depenses' 3 %}" class="nav-link {% if group == 3 %}active{% endif %}" aria-selected="{% if group == 3 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 3 %}true{% else %}false{% endif %}" >Semaine</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'recettes_depenses' 3 %}" class="nav-link {% if group == 3 %}active{% endif %}" aria-selected="{% if group == 3 %}true{% else %}false{% endif %}" >Semaine</a>
+                <a href="{% url 'recettes_depenses' 2 %}" class="nav-link {% if group == 2 %}active{% endif %}" aria-selected="{% if group == 2 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 2 %}true{% else %}false{% endif %}" >Mois</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'recettes_depenses' 4 %}" class="nav-link {% if group == 4 %}active{% endif %}" aria-selected="{% if group == 4 %}true{% else %}false{% endif %}" >Jour</a>
+                <a href="{% url 'recettes_depenses' 1 %}" class="nav-link{% if group == 1 %}active{% endif %}" aria-selected="{% if group == 1 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 1 %}true{% else %}false{% endif %}" >Année</a>
               </li>
             </ul>
           </div>
           <div class="tab-contant" id="myTabContent" ></div>
           <div class="row mt-3 justify-content-center">
-            <div class="col-sm-3 border-bottom"></div>
-            <div class="col-sm-2 text-center border-bottom">Recettes</div>
-            <div class="col-sm-2 text-center border-bottom">Dépenses</div>
+            <div class="col-6 col-sm-3 border-bottom"></div>
+            <div class="col-2 col-sm-2 text-center border-bottom text-truncate">Recettes</div>
+            <div class="col-4 col-sm-2 text-center border-bottom text-truncate">Dépenses</div>
           </div>
           {% for period in rows %}
           <div class="row mt-3 justify-content-center">
-            <div class="col-sm-3 border-bottom">{{ period.0 }}</div>
-            <div class="col-sm-2 text-center border-bottom text-success">{{ period.1 }}</div>
-            <div class="col-sm-2 text-center border-bottom text-warning">{{ period.2 }}</div>
+            <div class="col-6 col-sm-3 border-bottom">{{ period.0 }}</div>
+            <div class="col-2 col-sm-2 text-center border-bottom text-success">{{ period.1 }}</div>
+            <div class="col-4 col-sm-2 text-center border-bottom text-warning">{{ period.2 }}</div>
           </div>
           {% endfor %}
             </div>
