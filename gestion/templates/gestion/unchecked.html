@@ -13,7 +13,11 @@
               <div class="row">
                 <div class="col-sm-3 col-12 text-start">
                   {% if row.class == 'recette' %}
-                    {{ row.dates.depot.0 }}-{{ row.dates.depot.1|twodigits }}-{{ row.dates.depot.3|twodigits}}
+                    {% if row.reglements.commande.montant != 0 %}
+                      D : {{ row.reglements.commande.date.0 }}-{{ row.reglements.commande.date.1|twodigits }}-{{ row.reglements.commande.date.3|twodigits}}
+                    {% else %}
+                      R : {{ row.reglements.livraison.date.0 }}-{{ row.reglements.livraison.date.1|twodigits }}-{{ row.reglements.livraison.date.3|twodigits}}
+                    {% endif %}
                   {% else %}
                     {{ row.date.0 }}-{{ row.date.1|twodigits }}-{{ row.date.3|twodigits}}
                   {% endif %}

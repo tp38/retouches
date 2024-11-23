@@ -71,3 +71,26 @@ def recettes_depenses(request, group ):
         rows.append( [period, round(r.value[0], 2), round(r.value[1],2) ] )
                 
     return render( request,'gestion/recettesDepensesBy.html', {'group': group, 'rows': rows} )
+
+
+def especes(request, group ):
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+
+    db = s[settings.DB_GESTION]
+
+    rows = []
+    for r in db.view( 'gestion/especes', group_level=group, descending=True  ) :
+        period = ""
+        if group == 1 :
+            period = f"{r.key[0]}"
+        elif group == 2 :
+            period = f"{r.key[0]}-{r.key[1]}"
+        elif group == 3 :
+            period = f"{r.key[0]} s:{r.key[2]}"
+        elif group == 4 :
+            period = f"{r.key[0]}-{r.key[1]}-{r.key[3]}"
+        rows.append( [period, round(r.value[0], 2), round(r.value[1],2) ] )
+                
+    return render( request,'gestion/especesBy.html', {'group': group, 'rows': rows} )

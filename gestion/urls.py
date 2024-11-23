@@ -19,4 +19,5 @@ urlpatterns = [
     path( 'stats/inoutbyday', views.inOutByDay, name='in_out_by_day' ),
     path( 'stats/towns', views.getTowns, name='town-list' ),
     path( 'stats/recdep/<int:group>/', views.recettes_depenses, name='recettes_depenses' ),
+    path( 'stats/especes/<int:group>/', views.especes, name='especes' ),
 ]
