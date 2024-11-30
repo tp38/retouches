@@ -36,6 +36,8 @@
                     Synthèses
                   </a>
                   <ul class="dropdown-menu">
+                    <a class="dropdown-item" aria-current="page" href="{% url 'name-activity' 'none' %}">Recherche d'un nom</a>
+                    <a class="dropdown-item" aria-current="page" href="{% url 'activity-by-date' 'none' %}">Activité par date</a>
                     <a class="dropdown-item" aria-current="page" href="{% url 'unchecked' 'none' %}">Non pointés</a>
                     <a class="dropdown-item" aria-current="page" href="{% url 'especes' 4 %}">Especes</a>
                     <a class="dropdown-item" aria-current="page" href="{% url 'recettes_depenses' 4 %}">Recettes/Dépenses</a>

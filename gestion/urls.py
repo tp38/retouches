@@ -20,4 +20,6 @@ urlpatterns = [
     path( 'stats/towns', views.getTowns, name='town-list' ),
     path( 'stats/recdep/<int:group>/', views.recettes_depenses, name='recettes_depenses' ),
     path( 'stats/especes/<int:group>/', views.especes, name='especes' ),
+    path( 'stats/activitybydate/<str:dd>/', views.activity_by_date, name='activity-by-date' ),
+    path( 'stats/nameactivity/<str:dd>/', views.name_activity, name='name-activity' ),
 ]

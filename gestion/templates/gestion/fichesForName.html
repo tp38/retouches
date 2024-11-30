@@ -1,0 +1,49 @@
+{% extends 'gestion.html' %}
+{% load compta_extras %}
+
+{% block content %}
+    <div class="container mt-2">
+      <div class="row justify-content-center">
+        <div class="col-sm-6 p-3 col-12">
+          <h2>Fiches d'un nom</h2>
+          {% comment %} le formulaire de parametrage de l'affichage{% endcomment %}
+          <form class="row mt-3" method="post" action=".">
+            {% csrf_token %}
+            <div class="col-sm-3 offset-sm-1 p-1">
+              <label for="nameInput">Nom : </label>
+              <input type="text" name="name" id="nameInput" value="%">
+            </div>
+            <div class="col-sm-3 col-6 p-1 text-center">
+              <input type="submit" class="btn  btn-primary" value="Changer">
+            </div>
+            <div class="col-sm-3 col-6 p-1 text-center">
+              <a href="{% url 'synthese' %}" class="btn btn-primary" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
+            </div>  
+          </form>
+    
+          {% comment %}Le tableau des operations non pointées{% endcomment%}
+          <div class="container mt-5">
+            <div class="row">
+              <div class="col-sm-2 col-6 fw-bold">Ticket</div>
+              <div class="col-sm-2 col-6 text-center fw-bold">Coût</div>
+              <div class="col-sm-4 col-6 fw-bold">Dépôt</div>
+              <div class="col-sm-4 col-6 fw-bold">Retrait</div>
+          </div>
+          </div>
+          <div class="container list-group list-group-flush">
+            {% for row in rows %}
+            <a href="{% url 'recette-detail' row.id %}" class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-sm-2 col-6">{{row.carnet}}-{{row.numero}}</div>
+                <div class="col-sm-2 col-6">{{row.cout}}</div>
+                <div class="col-sm-4 col-6 text-center">{{row.dates.depot}}</div>
+                <div class="col-sm-4 col-6 text-center">{{row.dates.retrait}}</div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>            
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

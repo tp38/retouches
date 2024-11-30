@@ -55,7 +55,7 @@ def recette_detail(request, uuid):
             dates['sms'] = DateStringToArray( request.POST.get('sms') )
 
         # save reglements if exists
-        commande = { 'montant': 0.0, 'date': [0,0,0,0], 'mode': 'esp', 'frais': 0.0, 'bank': False }
+        commande = { 'montant': 0.0, 'date': [0,0,0,0], 'mode': 'esp', 'frais': 0.0, 'bank': False, 'forgot': False }
         if request.POST.__contains__('acp_montant') and request.POST.get('acp_montant') != '' :
             commande['montant'] = float(request.POST.get('acp_montant'))
 
@@ -77,8 +77,13 @@ def recette_detail(request, uuid):
         else :
             commande['bank'] = False
 
+        if request.POST.__contains__('acp_forgot') :
+            commande['forgot'] = True
+        else :
+            commande['forgot'] = False
 
-        livraison = { 'montant': 0.0, 'date': [0,0,0,0], 'mode': 'esp', 'frais': 0.0, 'bank': False }
+
+        livraison = { 'montant': 0.0, 'date': [0,0,0,0], 'mode': 'esp', 'frais': 0.0, 'bank': False, 'forgot': False }
         if request.POST.__contains__('livraison_montant') and request.POST.get('livraison_montant') != '':
             livraison['montant'] = float(request.POST.get('livraison_montant'))
 
@@ -100,6 +105,10 @@ def recette_detail(request, uuid):
         else :
             livraison['bank'] = False
 
+        if request.POST.__contains__('livraison_forgot') :
+            livraison['forgot'] = True
+        else :
+            livraison['forgot'] = False
 
         reglements = {}
         if len( commande ) != 0 :
@@ -142,14 +151,16 @@ def recette_detail(request, uuid):
                         "date" : [0,0,0,0],
                         "mode" : "chq",
                         "frais" : 0,
-                        "bank" : False
+                        "bank" : False,
+                        "forgot": False
                     },
                     "livraison" : {
                         "montant" : 0,
                         "date" : [0,0,0,0],
                         "mode" : "chq",
                         "frais" : 0,
-                        "bank" : False
+                        "bank" : False,
+                        "forgot": False
                     }                
                 },
                 "description" : "",

@@ -7,6 +7,9 @@ from django.conf import settings
 from datetime import datetime, date
 import calendar
 
+from .recettes import DateStringToArray
+
+
 
 def inOutByDay(request):
     login = request.session['login']
@@ -94,3 +97,58 @@ def especes(request, group ):
         rows.append( [period, round(r.value[0], 2), round(r.value[1],2) ] )
                 
     return render( request,'gestion/especesBy.html', {'group': group, 'rows': rows} )
+
+
+
+def activity_by_date(request, dd):
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+    db = s[settings.DB_GESTION]
+
+    if request.method == "POST":
+        dd = request.POST.get('dd')
+    else:
+        dd = date.today().strftime("%Y-%m-%d")
+
+    day = DateStringToArray( dd )
+
+    mango = {
+        "selector": {
+            "$or": [
+                {
+                    "dates.depot": { "$eq": day }
+                },
+                {
+                    "dates.retrait": { "$eq": day }
+                }
+            ]
+        },
+        "fields": [
+            "_id",
+            "carnet",
+            "numero",
+            "client.nom",
+            "reglements.commande.montant",
+            "reglements.commande.date",
+            "reglements.livraison.montant",
+            "reglements.livraison.date"
+        ],
+        "sort": [
+            {"carnet": "asc"},
+            {"numero": "asc"}
+        ]
+    }
+
+    data = []
+    for row in db.find( mango ) :
+        data.append( row )
+
+    return render( request, 'gestion/activityByDate.html', {'rows': data, 'day': dd, 'day_ar': day } )
+
+
+
+def name_activity(request, name):
+
+    rows = []
+    return render( request, 'gestion/fichesForName.html', {'rows': data } )

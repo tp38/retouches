@@ -6,6 +6,7 @@ services:
     container_name: ret_db
     volumes:
       - ../retouches.data:/opt/couchdb/data
+      - ../clouseau:/opt/clouseau
     environment:
       - COUCHDB_USER=couchdb
       - COUCHDB_PASSWORD=couchdb

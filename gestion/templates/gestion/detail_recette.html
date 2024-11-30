@@ -75,12 +75,22 @@
                   {% endif %}>
                 </div>
               <div class="mb-3">
-                <label for="acpBankInput">pointé</label>
-                {% if row.reglements.commande.bank %}
-                <input type="checkbox" id="acpBankInput"  name="acp_bank" checked>
-                {% else %}
-                <input type="checkbox" id="acpBankInput"  name="acp_bank">
-                {% endif %}
+                <span class="mx-3">
+                  <label for="acpBankInput">Pointé</label>
+                  {% if row.reglements.commande.bank %}
+                  <input type="checkbox" id="acpBankInput"  name="acp_bank" checked>
+                  {% else %}
+                  <input type="checkbox" id="acpBankInput"  name="acp_bank">
+                  {% endif %}
+                </span>
+                <span class="mx-3">
+                  <label for="acpForgotInput">Oubli</label>
+                  {% if row.reglements.commande.forgot %}
+                  <input type="checkbox" id="acpForgotInput" name="acp_forgot" checked>
+                  {% else %}
+                  <input type="checkbox" id="acpForgotInput" name="acp_forgot">
+                  {% endif %}
+                </span>
               </div>
             </div>
             {% if phase == "retrait" %}
@@ -104,12 +114,22 @@
                   {% endif %}>
               </div>
               <div class="mb-3">
-                <label for="soldeBankInput">pointé</label>
-                {% if row.reglements.livraison.bank %}
-                <input type="checkbox" id="soldeBankInput"  name="livraison_bank" checked>
-                {% else %}
-                <input type="checkbox" id="soldeBankInput"  name="livraison_bank">
-                {% endif %}
+                <span class="mx-3">
+                  <label for="soldeBankInput">Pointé</label>
+                  {% if row.reglements.livraison.bank %}
+                  <input type="checkbox" id="soldeBankInput"  name="livraison_bank" checked>
+                  {% else %}
+                  <input type="checkbox" id="soldeBankInput"  name="livraison_bank">
+                  {% endif %}
+                </span>
+                <span class="mx-3">
+                  <label for="soldeForgotInput">Oubli</label>
+                  {% if row.reglements.livraison.bank %}
+                  <input type="checkbox" id="soldeForgotInput"  name="livraison_forgot" checked>
+                  {% else %}
+                  <input type="checkbox" id="soldeForgotInput"  name="livraison_forgot">
+                  {% endif %}
+                </span>
               </div>    
             </div>
             {% comment %} client {% endcomment %}
