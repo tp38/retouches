@@ -5,7 +5,7 @@
     <div class="container mt-2">
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
-          <h2>Especes par {% if group == 1 %}Année{% elif group == 2 %}Mois{% elif group == 3 %}Semaine{% else %}Jour{% endif %} </h2>
+          <h2>Oublis par {% if group == 1 %}Année{% elif group == 2 %}Mois{% elif group == 3 %}Semaine{% else %}Jour{% endif %} </h2>
           <div class="row justify-content-end">
             <div class="col-sm-1">
               <a class="btn btn-primary" role="submit" href="{% url 'synthese' %}" data-toggle="tooltip" title="Retour à la synthèse"><i class="fa-solid fa-house"></i></a>
@@ -14,16 +14,16 @@
           <div class="row mt-3">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a href="{% url 'especes' 4 %}" class="nav-link {% if group == 4 %}active{% endif %}" aria-selected="{% if group == 4 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 4 %}true{% else %}false{% endif %}">Jour</a>
+                <a href="{% url 'especes_forgot' 4 %}" class="nav-link {% if group == 4 %}active{% endif %}" aria-selected="{% if group == 4 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 4 %}true{% else %}false{% endif %}">Jour</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'especes' 3 %}" class="nav-link {% if group == 3 %}active{% endif %}" aria-selected="{% if group == 3 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 3 %}true{% else %}false{% endif %}" >Semaine</a>
+                <a href="{% url 'especes_forgot' 3 %}" class="nav-link {% if group == 3 %}active{% endif %}" aria-selected="{% if group == 3 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 3 %}true{% else %}false{% endif %}" >Semaine</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'especes' 2 %}" class="nav-link {% if group == 2 %}active{% endif %}" aria-selected="{% if group == 2 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 2 %}true{% else %}false{% endif %}" >Mois</a>
+                <a href="{% url 'especes_forgot' 2 %}" class="nav-link {% if group == 2 %}active{% endif %}" aria-selected="{% if group == 2 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 2 %}true{% else %}false{% endif %}" >Mois</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'especes' 1 %}" class="nav-link {% if group == 1 %}active{% endif %}" aria-selected="{% if group == 1 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 1 %}true{% else %}false{% endif %}" >Année</a>
+                <a href="{% url 'especes_forgot' 1 %}" class="nav-link {% if group == 1 %}active{% endif %}" aria-selected="{% if group == 1 %}true{% else %}false{% endif %}" aria-disabled="{% if group == 1 %}true{% else %}false{% endif %}" >Année</a>
               </li>
             </ul>
           </div>
