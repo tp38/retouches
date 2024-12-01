@@ -172,5 +172,5 @@ def activity_by_date(request, dd):
 
 def name_activity(request, name):
 
-    rows = []
+    data = []
     return render( request, 'gestion/fichesForName.html', {'rows': data } )

@@ -22,5 +22,5 @@ urlpatterns = [
     path( 'stats/especes/<int:group>/', views.especes, name='especes' ),
     path( 'stats/oublis/<int:group>/', views.oublis, name='especes_forgot' ),
     path( 'stats/activitybydate/<str:dd>/', views.activity_by_date, name='activity-by-date' ),
-    path( 'stats/nameactivity/<str:dd>/', views.name_activity, name='name-activity' ),
+    path( 'stats/nameactivity/<str:name>/', views.name_activity, name='name-activity' ),
 ]

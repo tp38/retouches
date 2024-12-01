@@ -202,28 +202,40 @@ def recettes_liste(request):
         view = "recettes/Fiches"
 
     data = []
-    for r in db.view( view, startkey=[end,{}], endkey=[start,{}], descending=True ):
-        doc = db[r.id]
-        data.append( doc )
+    try:
+        for r in db.view( view, startkey=[end,{}], endkey=[start,{}], descending=True ):
+            doc = db[r.id]
+            data.append( doc )
+    except:
+        pass
 
     reqday = datetimeToArray( reqday )
     day = 0
-    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
-        if r.key[3] == reqday[3] :
-            day = r.value
-            break
+    try:
+        for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
+            if r.key[3] == reqday[3] :
+                day = r.value
+                break
+    except:
+        pass
 
     week = 0
-    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
-        if r.key[2] == reqday[2] :
-            week = r.value
-            break
+    try:
+        for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
+            if r.key[2] == reqday[2] :
+                week = r.value
+                break
+    except:
+        pass
 
     month = 0
-    for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
-        if r.key[1] == reqday[1] :
-            month = r.value
-            break
+    try:
+        for r in db.view( 'recettes/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+            if r.key[1] == reqday[1] :
+                month = r.value
+                break
+    except:
+        pass
 
     report = { 'day': day, 'week': week, 'month': month }
 

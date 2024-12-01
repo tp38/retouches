@@ -77,28 +77,40 @@ def depenses_liste(request):
     start = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-01" )
     end = DateStringToArray( f"{reqday.year}-{reqday.month:02d}-{calendar.monthrange(reqday.year, reqday.month)[1]:02d}" )
 
-    for r in db.view( "depenses/Fiches", startkey=end, endkey=start, descending=True ):
-        doc = db[r.id]
-        rows.append( doc )
+    try:
+        for r in db.view( "depenses/Fiches", startkey=end, endkey=start, descending=True ):
+            doc = db[r.id]
+            rows.append( doc )
+    except:
+        pass
 
     reqday = datetimeToArray( reqday )
     day = 0
-    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
-        if r.key[3] == reqday[3] :
-            day = round( r.value, 2)
-            break
+    try:
+        for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=4  ) :
+            if r.key[3] == reqday[3] :
+                day = round( r.value, 2)
+                break
+    except:
+        pass
 
     week = 0
-    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
-        if r.key[2] == reqday[2] :
-            week = round( r.value, 2 )
-            break
+    try:
+        for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=3  ) :
+            if r.key[2] == reqday[2] :
+                week = round( r.value, 2 )
+                break
+    except:
+        pass
 
     month = 0
-    for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
-        if r.key[1] == reqday[1] :
-            month = round( r.value, 2 )
-            break
+    try:
+        for r in db.view( 'depenses/Resultat', startkey=end, endkey=start, descending=True, group=True, group_level=2  ) :
+            if r.key[1] == reqday[1] :
+                month = round( r.value, 2 )
+                break
+    except:
+        pass
 
     report = { 'day': day, 'week': week, 'month': month }
 
