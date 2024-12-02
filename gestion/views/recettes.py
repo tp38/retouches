@@ -249,5 +249,8 @@ def DateStringToArray( d ) :
 
 
 def datetimeToArray( s ) :
-    return [ s.year, s.month, s.isocalendar()[1], s.day ]
+    week = s.isocalendar()[1]
+    if s.month == 12 and week == 1 :
+        week = 53
+    return [ s.year, s.month, week, s.day ]
 

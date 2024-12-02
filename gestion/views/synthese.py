@@ -79,7 +79,7 @@ def synthese(request):
         'depenses': depenses, 
         'provisions': provisions, 
         'frais': frais, 
-        'bilan': ca + depenses + frais - provisions - urssaf} )
+        'bilan': ca + depenses + frais - provisions } )
 
 
 def unchecked( request, uuid ) :
