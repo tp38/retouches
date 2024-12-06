@@ -69,7 +69,7 @@ def synthese(request):
         compta['incomes'] = round( r.value[0] + r.value[1] + r.value[2] - r.value[3], 2)
         compta['provision'] = round(r.value[3],2)
 
-    urssaf = round( ca * 0.212, 2)
+    urssaf = round( ca * 0.215, 2)
 
     return render( request,'gestion/synthese.html', { 
         'compta': compta, 
