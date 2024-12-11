@@ -5,8 +5,8 @@ services:
     image: couchdb:3.3.3
     container_name: ret_db
     volumes:
-      - ../retouches.data:/opt/couchdb/data
-      - ../clouseau:/opt/clouseau
+      - /home/th/Code/Python/Django/retouches_dev/retouches.data:/opt/couchdb/data
+      - /home/th/Code/Python/Django/retouches_dev/clouseau:/opt/clouseau
     environment:
       - COUCHDB_USER=couchdb
       - COUCHDB_PASSWORD=couchdb

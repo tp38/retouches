@@ -71,6 +71,10 @@ def synthese(request):
 
     urssaf = round( ca * 0.215, 2)
 
+    pending = 0
+    for r in db.view( 'gestion/recettesEnAttente', group_level=1 ) :
+        pending += r['value']
+
     return render( request,'gestion/synthese.html', { 
         'compta': compta, 
         'day': reqday, 
@@ -79,7 +83,8 @@ def synthese(request):
         'depenses': depenses, 
         'provisions': provisions, 
         'frais': frais, 
-        'bilan': ca + depenses + frais - provisions } )
+        'bilan': ca + depenses + frais - provisions,
+        'pending': pending } )
 
 
 def unchecked( request, uuid ) :
