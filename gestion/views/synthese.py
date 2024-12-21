@@ -72,8 +72,10 @@ def synthese(request):
     urssaf = round( ca * 0.215, 2)
 
     pending = 0
-    for r in db.view( 'gestion/recettesEnAttente', group_level=1 ) :
+    count = 0
+    for r in db.view( 'gestion/recettesEnAttente', reduce=False ) :
         pending += r['value']
+        count += 1
 
     return render( request,'gestion/synthese.html', { 
         'compta': compta, 
@@ -84,7 +86,8 @@ def synthese(request):
         'provisions': provisions, 
         'frais': frais, 
         'bilan': ca + depenses + frais - provisions,
-        'pending': pending } )
+        'pending': pending,
+        'nb_pending': count } )
 
 
 def unchecked( request, uuid ) :
