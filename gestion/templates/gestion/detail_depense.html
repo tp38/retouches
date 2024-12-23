@@ -37,7 +37,7 @@
             <label for="bankInput">pointé : </label>
           </div>
           <div class="col-sm-1 col-2">
-            {% if row.bank %}
+            {% if row.bank and row.bank == "on" %}
             <input type="checkbox" id="bankInput"  name="bank" checked>
             {% else %}
             <input type="checkbox" id="bankInput"  name="bank">

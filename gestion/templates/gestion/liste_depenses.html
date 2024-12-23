@@ -24,7 +24,7 @@
           <div class="container list-group list-group-flush">
             {% for row in rows %}
             <a href="{% url 'depense-detail' row.id %}" class="list-group-item list-group-item-action">
-              {% if row.bank %}
+              {% if row.bank == "on" %}
               <div class="row text-primary">
               {% else %}
               <div class="row text-warning">

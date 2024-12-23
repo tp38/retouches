@@ -48,6 +48,8 @@ def depense_detail(request, uuid):
         # save bank_state if exists
         if request.POST.__contains__('bank') :
             doc['bank'] = request.POST.get('bank')
+        else:
+            doc['bank'] = "off"
 
         db.save( doc )        
         return redirect( '/gestion/depenses/' )
