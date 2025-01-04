@@ -64,10 +64,10 @@ def synthese(request):
 
     compta = { 'bank': 0.0, 'real': 0.0, 'incomes': 0.0, 'provision': 0.0}
     for r in db.view( 'gestion/soldesBancaire', startkey=end, endkey=[2024,1,1,1], descending=True, group_level=1 ) :
-        compta['bank'] = round(r.value[0],2)
-        compta['real'] = round( r.value[0] + r.value[1], 2)
-        compta['incomes'] = round( r.value[0] + r.value[1] + r.value[2] - r.value[3], 2)
-        compta['provision'] = round(r.value[3],2)
+        compta['bank'] += round(r.value[0],2)
+        compta['real'] += round( r.value[0] + r.value[1], 2)
+        compta['incomes'] += round( r.value[0] + r.value[1] + r.value[2] - r.value[3], 2)
+        compta['provision'] += round(r.value[3],2)
 
     urssaf = round( ca * 0.215, 2)
 
