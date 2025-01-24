@@ -10,7 +10,7 @@
           <form class="row mt-3" method="post" action=".">
             {% csrf_token %}
             <div class="col-sm-4 p-1">
-              <input type="text" class="form-control" name="name" id="nameInput" placeholder="Nom">
+              <input type="text" class="form-control" name="phone" id="phoneInput" placeholder="Téléphone">
             </div>
             <div class="col-sm-3 col-6 p-1 text-center">
               <input type="submit" class="btn  btn-primary" value="Chercher">
@@ -22,13 +22,13 @@
     
           {% comment %}Le tableau des operations non pointées{% endcomment%}
           <div class="container mt-5">
-            <h3>{{ name }}</h3>
+            <h3>{{ phone }}</h3>
             <div class="row text-center fw-bold">
               <div class="col-sm-2 col-6">Ticket</div>
               <div class="col-sm-1 col-6">Coût</div>
               <div class="col-sm-3 col-6">Dépôt</div>
               <div class="col-sm-3 col-6">Retrait</div>
-              <div class="col-sm-3 col-6">Tel</div>
+              <div class="col-sm-3 col-6">Nom</div>
           </div>
           </div>
           <div class="container list-group list-group-flush">
@@ -39,7 +39,7 @@
                 <div class="col-sm-1 col-6">{{row.cout}}</div>
                 <div class="col-sm-3 col-6">{{row.dates.depot.0}}-{{row.dates.depot.1}}-{{row.dates.depot.3}}</div>
                 <div class="col-sm-3 col-6">{{row.dates.retrait.0}}-{{row.dates.retrait.1}}-{{row.dates.retrait.3}}</div>
-                <div class="col-sm-3 col-6">{{row.client.tel}}</div>
+                <div class="col-sm-3 col-6">{{row.client.nom}}</div>
               </div>
             </a>
             {% endfor %}

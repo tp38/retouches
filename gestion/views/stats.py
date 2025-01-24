@@ -171,6 +171,39 @@ def activity_by_date(request, dd):
 
 
 def name_activity(request, name):
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+    db = s[settings.DB_GESTION]
 
     data = []
-    return render( request, 'gestion/fichesForName.html', {'rows': data } )
+    if request.method == "POST" :
+        name = request.POST.get('name')
+
+        for row in db.view( "recettes/fichesByName", keys = [name.lower()], reduce = False ) :
+            doc = db[ row.id ]
+            data.append( doc )        
+
+        data = sorted( data, key = lambda x: f"{x['carnet']:02d}-{x['numero']:03d}" )
+
+    return render( request, 'gestion/fichesForName.html', {'name': name, 'rows': data } )
+
+
+
+def phone_activity(request, phone):
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+    db = s[settings.DB_GESTION]
+
+    data = []
+    if request.method == "POST" :
+        phone = request.POST.get('phone')
+
+        for row in db.view( "recettes/fichesByPhone", keys = [phone], reduce = False ) :
+            doc = db[ row.id ]
+            data.append( doc )        
+
+        data = sorted( data, key = lambda x: f"{x['carnet']:02d}-{x['numero']:03d}" )
+
+    return render( request, 'gestion/fichesForPhone.html', {'phone': phone, 'rows': data } )
