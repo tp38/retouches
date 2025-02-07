@@ -69,7 +69,12 @@ def synthese(request):
         compta['incomes'] += r.value[0] + r.value[1] + r.value[2] - r.value[3]
         compta['provision'] += r.value[3]
 
-    urssaf = round( ca * 0.215, 2)
+    d = datetime.strptime(dd, "%Y-%m-%d")
+    if d >= datetime.strptime( "2025-01-01", "%Y-%m-%d" ):
+        urssaf = round( ca * 0.2198, 2)
+    else :
+        urssaf = round( ca * 0.215, 2)
+
 
     compta['bank'] = round( compta['bank'], 2)
     compta['real'] = round( compta['real'], 2)
