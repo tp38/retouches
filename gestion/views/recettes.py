@@ -177,7 +177,6 @@ def recette_detail(request, uuid):
 
         return render( request,'gestion/detail_recette.html',{'row': doc, 'id': uuid, 'phase': phase } )
 
-
 def recettes_liste(request):
     login = request.session['login']
     pwd = request.session['pwd']
@@ -241,12 +240,9 @@ def recettes_liste(request):
 
     return render( request,'gestion/liste_recettes.html', {'rows': data, 'day': dd, 'report': report } )
 
-
-
 def DateStringToArray( d ) :
     s = datetime.strptime( d, "%Y-%m-%d")
     return datetimeToArray( s )
-
 
 def datetimeToArray( s ) :
     week = s.isocalendar()[1]

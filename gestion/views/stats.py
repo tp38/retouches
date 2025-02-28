@@ -33,8 +33,6 @@ def inOutByDay(request):
             
     return render( request,'gestion/inOutByDay.html', {'report': weekdays } )
 
-
-
 def getTowns(request):
     login = request.session['login']
     pwd = request.session['pwd']
@@ -50,8 +48,6 @@ def getTowns(request):
     rows.sort( key= lambda x: x.get('nb'), reverse=True )
     
     return render( request,'gestion/liste_villes.html', {'rows': rows} )
-
-
 
 def recettes_depenses(request, group ):
     login = request.session['login']
@@ -74,7 +70,6 @@ def recettes_depenses(request, group ):
         rows.append( [period, round(r.value[0], 2), round(r.value[1],2) ] )
                 
     return render( request,'gestion/recettesDepensesBy.html', {'group': group, 'rows': rows} )
-
 
 def especes(request, group ):
     login = request.session['login']
@@ -119,8 +114,6 @@ def oublis(request, group ):
         rows.append( [period, round(r.value[0], 2), round(r.value[1],2) ] )
                 
     return render( request,'gestion/oublisBy.html', {'group': group, 'rows': rows} )
-
-
 
 def activity_by_date(request, dd):
     login = request.session['login']
@@ -168,8 +161,6 @@ def activity_by_date(request, dd):
 
     return render( request, 'gestion/activityByDate.html', {'rows': data, 'day': dd, 'day_ar': day } )
 
-
-
 def name_activity(request, name):
     login = request.session['login']
     pwd = request.session['pwd']
@@ -188,8 +179,6 @@ def name_activity(request, name):
 
     return render( request, 'gestion/fichesForName.html', {'name': name, 'rows': data } )
 
-
-
 def phone_activity(request, phone):
     login = request.session['login']
     pwd = request.session['pwd']
@@ -207,3 +196,22 @@ def phone_activity(request, phone):
         data = sorted( data, key = lambda x: f"{x['carnet']:02d}-{x['numero']:03d}" )
 
     return render( request, 'gestion/fichesForPhone.html', {'phone': phone, 'rows': data } )
+
+def record_search(request, number):
+    login = request.session['login']
+    pwd = request.session['pwd']
+    s = Server( settings.URL_SERVER % (login, pwd) )
+    db = s[settings.DB_GESTION]
+
+    data = []
+    if request.method == "POST" :
+        number = request.POST.get('number')
+        nums = number.split('-')
+
+        for row in db.view( "recettes/FichesByCarnetNumero", keys = [ [ int(nums[0]), int(nums[1]) ] ], reduce = False ) :
+            doc = db[ row.id ]
+            data.append( doc )        
+
+        data = sorted( data, key = lambda x: f"{x['carnet']:02d}-{x['numero']:03d}" )
+
+    return render( request, 'gestion/fichesForNumber.html', {'number': number, 'rows': data } )

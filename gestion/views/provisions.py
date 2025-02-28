@@ -48,7 +48,6 @@ def provision_detail(request, uuid):
             doc = db[uuid]
         return render( request,'gestion/detail_provision.html',{'row': doc, 'id': uuid } )
 
-
 def provisions_liste(request):
     login = request.session['login']
     pwd = request.session['pwd']
@@ -97,7 +96,6 @@ def provisions_liste(request):
     report = { 'month': month, 'year': year }
 
     return render( request,'gestion/liste_provisions.html', {'rows': rows, 'day': dd, 'report': report } )
-
 
 def provision_delete(request,uuid) :
     login = request.session['login']

@@ -19,7 +19,6 @@ def login(request):
     else:
         return render( request, 'gestion/login.html' )
 
-
 def logout(request):
     del request.session['login']
     del request.session['pwd']

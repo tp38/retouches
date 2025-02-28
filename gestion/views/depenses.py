@@ -61,7 +61,6 @@ def depense_detail(request, uuid):
             doc = db[uuid]
         return render( request,'gestion/detail_depense.html',{'row': doc, 'id': uuid } )
 
-
 def depenses_liste(request):
     login = request.session['login']
     pwd = request.session['pwd']

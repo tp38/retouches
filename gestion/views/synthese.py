@@ -99,7 +99,6 @@ def synthese(request):
         'pending': pending,
         'nb_pending': count } )
 
-
 def unchecked( request, uuid ) :
     login = request.session['login']
     pwd = request.session['pwd']

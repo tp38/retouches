@@ -48,7 +48,6 @@ def depot_detail(request, uuid):
             doc = db[uuid]
         return render( request,'gestion/detail_depot.html',{'row': doc, 'id': uuid } )
 
-
 def depots_liste(request):
     login = request.session['login']
     pwd = request.session['pwd']
